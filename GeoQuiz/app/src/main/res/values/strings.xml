@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">GeoQuiz</string>
+    <string name="btn_true">True</string>
+    <string name="btn_false">False</string>
+    <string name="btn_next">Next</string>
+    <string name="question">This is an amazingly tricky question! Do you know the answer?</string>
+    <string name="correctAnswer">Correct!</string>
+    <string name="wrongAnswer">Wrong :(</string>
+
+    <!-- Questions -->
+    <string name="q_Alaska">Alaska is both the westernmost and easternmost state in America.</string>
+    <string name="q_Antarctica">Antarctica is the largest desert in the world.</string>
+    <string name="q_Russia">Russia has 11 time zones.</string>
+    <string name="q_MtChimborazo">Mount Chimborazo is the highest point on Earth, but not the world\'s tallest mountain</string>
+    <string name="q_Africa">Africa is the only continent that lies in all four hemispheres</string>
+</resources>
