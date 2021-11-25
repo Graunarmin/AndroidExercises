@@ -1,8 +1,23 @@
 <resources>
+    <!-- Start Screen -->
+    <string name="start_headline">GeoQuiz</string>
+    <string name="btn_start">Start!</string>
+
+    <!-- Player Setup -->
+    <string name="setup_headline">GeoQuiz - Location</string>
+    <string name="setup_name_label">Name</string>
+    <string name="setup_name_hint">Your Name</string>
+    <string name="setup_location_label">Location</string>
+    <string name="setup_location_hint">Continent or City</string>
+    <string name="btn_show_location">Show!</string>
+
+    <!-- Quiz -->
     <string name="app_name">GeoQuiz</string>
     <string name="btn_true">True</string>
     <string name="btn_false">False</string>
     <string name="btn_next">Next</string>
+    <string name="btn_change_location">Change Location</string>
+    <string name="btn_cheat">Cheat</string>
     <string name="question">This is an amazingly tricky question! Do you know the answer?</string>
     <string name="correctAnswer">Correct!</string>
     <string name="wrongAnswer">Wrong :(</string>

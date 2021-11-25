@@ -5,17 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 
-private const val TAG = "MainActivity"
-
-class MainActivity : AppCompatActivity() {
-
+class PlayerSetup : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.player_setup)
     }
 
     fun onPlayButtonClick(view: View){
-        val intent = Intent(this, PlayerSetup::class.java)
+        val intent = Intent(this, QuizGame::class.java)
         startActivity(intent)
     }
 }
