@@ -1,19 +1,24 @@
 package com.example.geoquiz
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import android.view.View
 
-private const val TAG = "QuizActivity"
+const val EXTRA_QUESTION_LOCATION = "EXTRA_QUESTION_LOCATION"
+private const val TAG = "QuizGame"
 
 class QuizGame : AppCompatActivity() {
     private lateinit var btnTrue: Button
     private lateinit var btnFalse: Button
     private lateinit var btnNext: Button
     private lateinit var tvQuestion: TextView
+    private lateinit var playerName: String
+    private lateinit var btnShowMap: Button
 
     private lateinit var questions: List<Question>
     private var questionIndex: Int = 0
@@ -27,21 +32,15 @@ class QuizGame : AppCompatActivity() {
         btnFalse = findViewById(R.id.btnFalse)
         btnNext = findViewById(R.id.btnNext)
         tvQuestion = findViewById(R.id.tvQuestion)
+        btnShowMap = findViewById(R.id.btnShowOnMap)
+
+        playerName = intent.getStringExtra(EXTRA_USER_NAME).toString()
+
+        Log.i(TAG, "User Name: $playerName")
 
         //Add Listeners to Buttons
-        btnFalse.setOnClickListener{
-            checkAnswer(false)
-            showNextQuestion()
-        }
+        setOnClickListeners()
 
-        btnTrue.setOnClickListener{
-            checkAnswer(true)
-            showNextQuestion()
-        }
-
-        btnNext.setOnClickListener{
-            showNextQuestion()
-        }
 
         // Create List of Questions
         questions = createQuestions()
@@ -51,10 +50,36 @@ class QuizGame : AppCompatActivity() {
 
     }
 
+    private fun setOnClickListeners(){
+        btnFalse.setOnClickListener{
+            onAnswerButton(it, false)
+        }
+
+        btnTrue.setOnClickListener{
+            onAnswerButton(it, true)
+        }
+
+        btnNext.setOnClickListener{
+            showNextQuestion()
+        }
+
+        btnShowMap.setOnClickListener{
+            onShowMapButton(it)
+        }
+    }
+
+    private fun onShowMapButton(view: View){
+        startNewIntent("Germany")
+    }
+
+    private fun onAnswerButton(view: View, answer: Boolean){
+        checkAnswer(answer)
+    }
+
     private fun checkAnswer(answer: Boolean){
         Log.i(TAG, "Button '${answer.toString()}' was pressed")
 
-        var toastText : String
+        val toastText : String
 
         if(getCurrentQuestion().answerCorrect(answer))
         {
@@ -71,6 +96,15 @@ class QuizGame : AppCompatActivity() {
         }
         Toast.makeText(applicationContext, "$toastText", Toast.LENGTH_SHORT).show()
     }
+
+    private fun startNewIntent(message: String){
+        val intent = Intent(this, ShowMap::class.java).apply {
+            putExtra(EXTRA_QUESTION_LOCATION, message)
+        }
+        startActivity(intent)
+    }
+
+    // Question Kram, der ausgelagert werden sollte
 
     private fun getCurrentQuestion() : Question{
         return questions[questionIndex]
@@ -99,4 +133,5 @@ class QuizGame : AppCompatActivity() {
             Question(R.string.q_Russia, true)
         )
     }
+
 }
