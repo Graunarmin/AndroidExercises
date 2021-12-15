@@ -47,6 +47,7 @@ class ShowMap : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         Log.i(TAG, "Location to render: $questionLocation")
+        // ToDo: Längengrade für jeden Ort raussuchen und in ressourcen speichern, dann mit Schlüssel ziehen und hier einsetzen
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))

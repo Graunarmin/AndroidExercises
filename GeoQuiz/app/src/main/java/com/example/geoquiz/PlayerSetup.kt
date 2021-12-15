@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 
 const val EXTRA_USER_NAME = "EXTRA_USER_NAME"
 private const val TAG = "com.example.geoquiz.playersetup"
@@ -19,7 +20,6 @@ class PlayerSetup : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.player_setup)
 
-        //Assign Variables
         etNameInput = findViewById(R.id.etNameInput)
         btnPlay = findViewById(R.id.btnPlay)
 
@@ -32,12 +32,15 @@ class PlayerSetup : AppCompatActivity() {
         }
     }
 
-    private fun onPlayButtonClick(view: View){
-        val playerName: String = etNameInput.text.toString()
-
-        //ToDo: Check that strings are not empty!
-
-        startNewIntent(playerName)
+    private fun onPlayButtonClick(view: View)
+    {
+        if (etNameInput.text.toString() == "")
+        {
+            Toast.makeText(this, "Please enter your name.", Toast.LENGTH_SHORT).show()
+        }else
+        {
+            startNewIntent(etNameInput.text.toString())
+        }
     }
 
     private fun startNewIntent(message: String){

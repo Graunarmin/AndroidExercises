@@ -20,6 +20,14 @@
     <string name="correctAnswer">Correct :)</string>
     <string name="wrongAnswer">Wrong :(</string>
 
+    <!-- Cheating -->
+    <string name="cheat_warning_text">Are you sure you want to cheat?</string>
+    <string name="btn_yes_cheat">Yes, show answer!</string>
+    <string name="btn_phone_a_friend">Yes, phone-a-friend!</string>
+    <string name="btn_no_cheat">No, go back.</string>
+    <string name="judgement_toast">It\'s your life ¯\_(ツ)_/¯</string>
+    <string name="cheat_answer_hint">Answer</string>
+
     <!-- Questions -->
     <string name="q_Alaska">Alaska is both the westernmost and easternmost state in America.</string>
     <string name="q_Antarctica">Antarctica is the largest desert in the world.</string>
