@@ -25,11 +25,13 @@ import kotlin.collections.ArrayList
  class MainActivity : AppCompatActivity() {
 
     //private val STORAGE_PERMISSION_CODE = 1
-     private lateinit var itemList: ArrayList<ExampleItem>
+    private var itemList: ArrayList<ExampleItem> = ArrayList<ExampleItem>()
+     private val adapter = RecyclerAdapter(itemList)
 
     private lateinit var btnPermission : Button
     private lateinit var tvUsageStats: TextView
-    //private lateinit var rvUsageList: RecyclerView
+    private lateinit var rvUsageList: RecyclerView
+    private lateinit var btnRefresh: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,30 +39,34 @@ import kotlin.collections.ArrayList
 
         initMembers()
         setOnClickListeners()
-        //setAdapter()
+        setAdapter()
     }
 
      private fun initMembers()
      {
          btnPermission = findViewById(R.id.btnPermission)
          tvUsageStats = findViewById(R.id.tvUsageStats)
-         //rvUsageList = findViewById(R.id.rvUsageList)
+         rvUsageList = findViewById(R.id.rvUsageList)
+         btnRefresh = findViewById(R.id.btnRefresh)
      }
 
      private fun setAdapter()
      {
-         //var adapter = RecyclerAdapter(itemList)
-        // var layoutManager = LinearLayoutManager(this)
-         //rvUsageList.layoutManager = layoutManager
-         //rvUsageList.itemAnimator = DefaultItemAnimator()
-        // rvUsageList.adapter = adapter
-        // rvUsageList.setHasFixedSize(true)
+         val layoutManager = LinearLayoutManager(this)
+         rvUsageList.layoutManager = layoutManager
+         rvUsageList.itemAnimator = DefaultItemAnimator()
+         rvUsageList.adapter = adapter
+         rvUsageList.setHasFixedSize(true)
      }
 
      private fun setOnClickListeners()
      {
          btnPermission.setOnClickListener {
              onButtonClick(it)
+         }
+
+         btnRefresh.setOnClickListener{
+             updateList(it)
          }
      }
 
@@ -103,13 +109,21 @@ import kotlin.collections.ArrayList
                     "Last Time Stamp: " + convertTime(queryUsageStats[i].lastTimeStamp) + "\n" +
                     "Total Time in Foreground: " + convertTime(queryUsageStats[i].totalTimeInForeground) + "\n"
 
-            //appName = queryUsageStats[i].packageName
-            //appTime = convertTime(queryUsageStats[i].totalTimeInForeground)
+            appName = queryUsageStats[i].packageName
+            appTime = convertTime(queryUsageStats[i].totalTimeInForeground)
 
-            //setAppInfo(appName, appTime)
+            setAppInfo(appName, appTime)
         }
-        tvUsageStats.text = statsData
+        // tvUsageStats.text = statsData
     }
+
+     public fun updateList(view: View)
+     {
+         showUsageStats()
+         // better use notifyItemInserted() or sth. like that https://www.youtube.com/watch?v=XyQvoONPMng
+         // and also put in Adapter Class
+         adapter.notifyDataSetChanged()
+     }
 
      private fun convertTime(lastTimeUsed: Long): String
      {
@@ -120,6 +134,7 @@ import kotlin.collections.ArrayList
 
      private fun setAppInfo(appName: String, appTime: String)
      {
+         //Put Functionality in Adapter Class
          itemList.add(ExampleItem(R.drawable.ic_android, appName, appTime))
      }
  }

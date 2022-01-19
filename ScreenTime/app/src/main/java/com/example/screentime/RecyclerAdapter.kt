@@ -37,4 +37,6 @@ class RecyclerAdapter (var itemList: ArrayList<ExampleItem>) : RecyclerView.Adap
         return itemList.size
     }
 
+
+
 }
