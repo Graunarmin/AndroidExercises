@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ScreenTime</string>
+    <string name="permission_button">Permission</string>
+</resources>
