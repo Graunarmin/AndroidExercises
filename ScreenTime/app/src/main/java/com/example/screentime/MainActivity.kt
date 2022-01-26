@@ -22,16 +22,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
- class MainActivity : AppCompatActivity() {
-
-    //private val STORAGE_PERMISSION_CODE = 1
-    private var itemList: ArrayList<ExampleItem> = ArrayList<ExampleItem>()
-     private val adapter = RecyclerAdapter(itemList)
-
+ class MainActivity : AppCompatActivity()
+ {
     private lateinit var btnPermission : Button
-    private lateinit var tvUsageStats: TextView
-    private lateinit var rvUsageList: RecyclerView
-    private lateinit var btnRefresh: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,24 +32,12 @@ import kotlin.collections.ArrayList
 
         initMembers()
         setOnClickListeners()
-        setAdapter()
     }
 
      private fun initMembers()
      {
          btnPermission = findViewById(R.id.btnPermission)
-         tvUsageStats = findViewById(R.id.tvUsageStats)
-         rvUsageList = findViewById(R.id.rvUsageList)
-         btnRefresh = findViewById(R.id.btnRefresh)
-     }
 
-     private fun setAdapter()
-     {
-         val layoutManager = LinearLayoutManager(this)
-         rvUsageList.layoutManager = layoutManager
-         rvUsageList.itemAnimator = DefaultItemAnimator()
-         rvUsageList.adapter = adapter
-         rvUsageList.setHasFixedSize(true)
      }
 
      private fun setOnClickListeners()
@@ -64,17 +45,13 @@ import kotlin.collections.ArrayList
          btnPermission.setOnClickListener {
              onButtonClick(it)
          }
-
-         btnRefresh.setOnClickListener{
-             updateList(it)
-         }
      }
 
      private fun onButtonClick(view: View)
      {
          if(checkForPermission())
          {
-             showUsageStats()
+             //ToDo: Start new Activity (ScreenTimeHome)
          }
          else
          {
@@ -88,53 +65,4 @@ import kotlin.collections.ArrayList
         return mode == MODE_ALLOWED
     }
 
-    private fun showUsageStats()
-    {
-        var usageStatsManager: UsageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-        var cal: Calendar = Calendar.getInstance()
-        cal.add(Calendar.DAY_OF_MONTH, -1)
-        var queryUsageStats : List<UsageStats> = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
-            cal.timeInMillis,
-            System.currentTimeMillis())
-
-        var statsData : String = ""
-        var appName: String = ""
-        var appTime: String = ""
-        for (i in queryUsageStats.indices)
-        {
-            statsData = statsData + "Package Name: " + queryUsageStats[i].packageName + "\n" +
-                    "Last Time Used: " + convertTime(queryUsageStats[i].lastTimeUsed) + "\n" +
-                    "Describe Contents: " + queryUsageStats[i].describeContents() + "\n" +
-                    "First Time Stamp: " + convertTime(queryUsageStats[i].firstTimeStamp) + "\n" +
-                    "Last Time Stamp: " + convertTime(queryUsageStats[i].lastTimeStamp) + "\n" +
-                    "Total Time in Foreground: " + convertTime(queryUsageStats[i].totalTimeInForeground) + "\n"
-
-            appName = queryUsageStats[i].packageName
-            appTime = convertTime(queryUsageStats[i].totalTimeInForeground)
-
-            setAppInfo(appName, appTime)
-        }
-        // tvUsageStats.text = statsData
-    }
-
-     public fun updateList(view: View)
-     {
-         showUsageStats()
-         // better use notifyItemInserted() or sth. like that https://www.youtube.com/watch?v=XyQvoONPMng
-         // and also put in Adapter Class
-         adapter.notifyDataSetChanged()
-     }
-
-     private fun convertTime(lastTimeUsed: Long): String
-     {
-         var date: Date = Date(lastTimeUsed)
-         var format: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH)
-         return format.format(date)
-     }
-
-     private fun setAppInfo(appName: String, appTime: String)
-     {
-         //Put Functionality in Adapter Class
-         itemList.add(ExampleItem(R.drawable.ic_android, appName, appTime))
-     }
  }
