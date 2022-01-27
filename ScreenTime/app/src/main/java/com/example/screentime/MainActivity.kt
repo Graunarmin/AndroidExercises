@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+ private const val TAG = "com.example.screentime.MainActivity"
  class MainActivity : AppCompatActivity()
  {
     private lateinit var btnPermission : Button
@@ -51,7 +52,7 @@ import kotlin.collections.ArrayList
      {
          if(checkForPermission())
          {
-             //ToDo: Start new Activity (ScreenTimeHome)
+             startNewIntent()
          }
          else
          {
@@ -64,5 +65,10 @@ import kotlin.collections.ArrayList
         val mode = appOpsManager.checkOpNoThrow(OPSTR_GET_USAGE_STATS, myUid(), packageName)
         return mode == MODE_ALLOWED
     }
+
+     private fun startNewIntent(){
+         val intent = Intent(this, ScreenTimeHome::class.java)
+         startActivity(intent)
+     }
 
  }

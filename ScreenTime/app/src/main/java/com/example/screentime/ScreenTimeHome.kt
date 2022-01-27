@@ -1,15 +1,10 @@
 package com.example.screentime
 
-import android.app.AppOpsManager
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Process
-import android.provider.Settings
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -17,33 +12,31 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ScreenTimeHome : AppCompatActivity()
 {
-    private var itemList: ArrayList<ExampleItem> = ArrayList<ExampleItem>()
-    private val adapter = RecyclerAdapter(itemList)
+    private val adapter = RecyclerAdapter()
 
-    private lateinit var tvUsageStats: TextView
+    private lateinit var tvHomeScreenHeadline: TextView
     private lateinit var rvUsageList: RecyclerView
     private lateinit var btnRefresh: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.screen_time_home)
 
         initMembers()
         setOnClickListeners()
         setAdapter()
 
-        //ToDo: Sow Usage Stats from beginning
+        showUsageStats()
     }
 
     private fun initMembers()
     {
-        tvUsageStats = findViewById(R.id.tvUsageStats)
         rvUsageList = findViewById(R.id.rvUsageList)
         btnRefresh = findViewById(R.id.btnRefresh)
+        tvHomeScreenHeadline = findViewById(R.id.tvHomeScreenHeadline)
     }
 
     private fun setAdapter()
@@ -58,16 +51,16 @@ class ScreenTimeHome : AppCompatActivity()
     private fun setOnClickListeners()
     {
         btnRefresh.setOnClickListener{
-            updateList(it)
+            showUsageStats()
         }
     }
 
     private fun showUsageStats()
     {
-        var usageStatsManager: UsageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-        var cal: Calendar = Calendar.getInstance()
+        val usageStatsManager: UsageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        val cal: Calendar = Calendar.getInstance()
         cal.add(Calendar.DAY_OF_MONTH, -1)
-        var queryUsageStats : List<UsageStats> = usageStatsManager.queryUsageStats(
+        val queryUsageStats : List<UsageStats> = usageStatsManager.queryUsageStats(
                 UsageStatsManager.INTERVAL_DAILY,
                 cal.timeInMillis,
                 System.currentTimeMillis())
@@ -88,31 +81,21 @@ class ScreenTimeHome : AppCompatActivity()
                         "Total Time in Foreground: " + convertTime(queryUsageStats[i].totalTimeInForeground) + "\n"
 
             appName = queryUsageStats[i].packageName
-            appTime = convertTime(queryUsageStats[i].totalTimeInForeground)
+            val desc = convertTime(queryUsageStats[i].totalTimeInForeground)
 
-            setAppInfo(appName, appTime)
+            setAppInfo(appName, desc, 10.0f)
         }
-        // tvUsageStats.text = statsData
-    }
-
-    public fun updateList(view: View)
-    {
-        showUsageStats()
-        // better use notifyItemInserted() or sth. like that https://www.youtube.com/watch?v=XyQvoONPMng
-        // and also put in Adapter Class
-        adapter.notifyDataSetChanged()
     }
 
     private fun convertTime(lastTimeUsed: Long): String
     {
-        var date: Date = Date(lastTimeUsed)
-        var format: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH)
+        val date: Date = Date(lastTimeUsed)
+        val format: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH)
         return format.format(date)
     }
 
-    private fun setAppInfo(appName: String, appTime: String)
+    private fun setAppInfo(appName: String, description: String, appTime: Float)
     {
-        //Put Functionality in Adapter Class
-        itemList.add(ExampleItem(R.drawable.ic_android, appName, appTime))
+        adapter.addItem(R.drawable.ic_android, appName, description, appTime)
     }
 }

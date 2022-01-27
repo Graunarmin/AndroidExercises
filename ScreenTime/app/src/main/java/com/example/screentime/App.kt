@@ -1,6 +1,3 @@
 package com.example.screentime
 
-class App (var appName: String)
-{
-
-}
+data class App (val imagesResource: Int, val text1: String, val text2: String)

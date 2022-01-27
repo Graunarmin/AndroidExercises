@@ -8,8 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class RecyclerAdapter (var itemList: ArrayList<ExampleItem>) : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>()
+class RecyclerAdapter () : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>()
 {
+    var itemList = ArrayList<ExampleItem>()
+
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     {
         val ivIcon: ImageView = itemView.findViewById(R.id.ivIcon)
@@ -37,6 +39,40 @@ class RecyclerAdapter (var itemList: ArrayList<ExampleItem>) : RecyclerView.Adap
         return itemList.size
     }
 
+    public fun addItem(icon: Int, name: String, text: String, time: Float)
+    {
+        // Check if item is already in list (by name)
+        var index = itemList.indexOf(itemList.find { x -> x.text1 == name })
 
+        if(index != -1)
+        {
+            // if it is: remove the old entry
+            itemList.removeAt(index)
+            // then notify change at removed position
+            this.notifyItemRemoved(index);
+        }
+
+        // find out where in the List the new entry fits (sorted descending by usage time)
+        val newItem = ExampleItem(icon, name, text, time)
+        index = getNewItemIndex(newItem)
+
+        // add new entry
+        itemList.add(index, newItem)
+
+        // then notify change at added position
+        this.notifyItemInserted(index)
+    }
+
+    private fun getNewItemIndex(itemToInsert: ExampleItem): Int
+    {
+        for(item : ExampleItem in itemList)
+        {
+            if(item.time < itemToInsert.time)
+            {
+                return itemList.indexOf(item)
+            }
+        }
+        return itemList.size;
+    }
 
 }
