@@ -81,9 +81,9 @@ class ScreenTimeHome : AppCompatActivity()
                         "Total Time in Foreground: " + convertTime(queryUsageStats[i].totalTimeInForeground) + "\n"
 
             appName = queryUsageStats[i].packageName
-            val desc = convertTime(queryUsageStats[i].totalTimeInForeground)
+            appTime = convertTime(queryUsageStats[i].totalTimeInForeground)
 
-            setAppInfo(appName, desc, 10.0f)
+            setAppInfo(appName, appTime)
         }
     }
 
@@ -94,8 +94,8 @@ class ScreenTimeHome : AppCompatActivity()
         return format.format(date)
     }
 
-    private fun setAppInfo(appName: String, description: String, appTime: Float)
+    private fun setAppInfo(appName: String, appTime: String)
     {
-        adapter.addItem(R.drawable.ic_android, appName, description, appTime)
+        adapter.addItem(R.drawable.ic_android, appName, appTime)
     }
 }

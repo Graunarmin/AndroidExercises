@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerAdapter () : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>()
 {
-    var itemList = ArrayList<ExampleItem>()
+    var appList = ArrayList<App>()
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     {
-        val ivIcon: ImageView = itemView.findViewById(R.id.ivIcon)
-        val tvText1: TextView = itemView.findViewById(R.id.tvText1)
-        val tvText2: TextView = itemView.findViewById(R.id.tvText2)
+        val ivAppIcon: ImageView = itemView.findViewById(R.id.ivAppIcon)
+        val tvAppName: TextView = itemView.findViewById(R.id.tvAppName)
+        val tvUsageTime: TextView = itemView.findViewById(R.id.tvUsageTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.MyViewHolder
@@ -28,51 +28,52 @@ class RecyclerAdapter () : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>()
 
     override fun onBindViewHolder(holder: RecyclerAdapter.MyViewHolder, position: Int)
     {
-        val currentItem = itemList[position]
-        holder.ivIcon.setImageResource(currentItem.imagesResource)
-        holder.tvText1.text = currentItem.text1
-        holder.tvText2.text = currentItem.text2
+        val currentItem = appList[position]
+        holder.ivAppIcon.setImageResource(currentItem.imagesResource)
+        holder.tvAppName.text = currentItem.appName
+        holder.tvUsageTime.text = currentItem.usageTime
     }
 
     override fun getItemCount(): Int
     {
-        return itemList.size
+        return appList.size
     }
 
-    public fun addItem(icon: Int, name: String, text: String, time: Float)
+    public fun addItem(icon: Int, name: String, usage: String)
     {
         // Check if item is already in list (by name)
-        var index = itemList.indexOf(itemList.find { x -> x.text1 == name })
+        var index = appList.indexOf(appList.find { x -> x.appName == name })
 
         if(index != -1)
         {
             // if it is: remove the old entry
-            itemList.removeAt(index)
+            appList.removeAt(index)
             // then notify change at removed position
             this.notifyItemRemoved(index);
         }
 
         // find out where in the List the new entry fits (sorted descending by usage time)
-        val newItem = ExampleItem(icon, name, text, time)
-        index = getNewItemIndex(newItem)
+        val newAppItem = App(icon, name, usage)
+        index = getNewItemIndex(newAppItem)
 
         // add new entry
-        itemList.add(index, newItem)
+        appList.add(index, newAppItem)
 
         // then notify change at added position
         this.notifyItemInserted(index)
     }
 
-    private fun getNewItemIndex(itemToInsert: ExampleItem): Int
+    private fun getNewItemIndex(itemToInsert: App): Int
     {
-        for(item : ExampleItem in itemList)
+        for(item : App in appList)
         {
-            if(item.time < itemToInsert.time)
+            // ToDo: Write Comparator for String time!!
+            if(item.usageTime < itemToInsert.usageTime)
             {
-                return itemList.indexOf(item)
+                return appList.indexOf(item)
             }
         }
-        return itemList.size;
+        return appList.size;
     }
 
 }

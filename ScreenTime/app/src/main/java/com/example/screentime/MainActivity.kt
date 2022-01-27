@@ -38,7 +38,6 @@ import kotlin.collections.ArrayList
      private fun initMembers()
      {
          btnPermission = findViewById(R.id.btnPermission)
-
      }
 
      private fun setOnClickListeners()
@@ -56,7 +55,7 @@ import kotlin.collections.ArrayList
          }
          else
          {
-             startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+             openSettings()
          }
      }
 
@@ -66,9 +65,20 @@ import kotlin.collections.ArrayList
         return mode == MODE_ALLOWED
     }
 
+     private fun openSettings()
+     {
+         startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+     }
+
      private fun startNewIntent(){
          val intent = Intent(this, ScreenTimeHome::class.java)
          startActivity(intent)
+     }
+
+     override fun onResume()
+     {
+         super.onResume()
+
      }
 
  }
