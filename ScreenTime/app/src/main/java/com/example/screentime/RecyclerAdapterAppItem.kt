@@ -1,5 +1,6 @@
 package com.example.screentime
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class RecyclerAdapter () : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>()
+class RecyclerAdapterAppItem () : RecyclerView.Adapter<RecyclerAdapterAppItem.MyViewHolder>()
 {
     var appList = ArrayList<App>()
 
@@ -19,17 +20,17 @@ class RecyclerAdapter () : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>()
         val tvUsageTime: TextView = itemView.findViewById(R.id.tvUsageTime)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.MyViewHolder
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapterAppItem.MyViewHolder
     {
         //Layout Inflater creates an Object from the "Blueprint" of a Layout Class: inflate turns Object into ViewObject
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.example_item, parent, false)
         return MyViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: RecyclerAdapter.MyViewHolder, position: Int)
+    override fun onBindViewHolder(holder: RecyclerAdapterAppItem.MyViewHolder, position: Int)
     {
         val currentItem = appList[position]
-        holder.ivAppIcon.setImageResource(currentItem.imagesResource)
+        holder.ivAppIcon.setImageDrawable(currentItem.appIcon)
         holder.tvAppName.text = currentItem.appName
         holder.tvUsageTime.text = currentItem.usageTime
     }
@@ -39,7 +40,7 @@ class RecyclerAdapter () : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>()
         return appList.size
     }
 
-    public fun addItem(icon: Int, name: String, usage: String)
+    public fun addItem(icon: Drawable?, name: String, usage: String, category: Int)
     {
         // Check if item is already in list (by name)
         var index = appList.indexOf(appList.find { x -> x.appName == name })
@@ -53,7 +54,7 @@ class RecyclerAdapter () : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>()
         }
 
         // find out where in the List the new entry fits (sorted descending by usage time)
-        val newAppItem = App(icon, name, usage)
+        val newAppItem = App(icon, name, usage, category)
         index = getNewItemIndex(newAppItem)
 
         // add new entry
