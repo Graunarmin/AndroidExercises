@@ -1,6 +1,7 @@
 package com.example.screentime
 
-import android.graphics.drawable.Drawable
+import android.app.usage.UsageStats
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,7 @@ class RecyclerAdapterAppItem () : RecyclerView.Adapter<RecyclerAdapterAppItem.My
         val currentItem = appList[position]
         holder.ivAppIcon.setImageDrawable(currentItem.appIcon)
         holder.tvAppName.text = currentItem.appName
-        holder.tvUsageTime.text = currentItem.usageTime
+        holder.tvUsageTime.text = currentItem.readableUseTime
     }
 
     override fun getItemCount(): Int
@@ -40,21 +41,32 @@ class RecyclerAdapterAppItem () : RecyclerView.Adapter<RecyclerAdapterAppItem.My
         return appList.size
     }
 
-    public fun addItem(icon: Drawable?, name: String, usage: String, category: Int)
+    public fun addItem(usageStats: UsageStats, context: Context, includeUnusedApps: Boolean)
     {
-        // Check if item is already in list (by name)
-        var index = appList.indexOf(appList.find { x -> x.appName == name })
+        // Create new app item
+        val newAppItem = App(usageStats, context)
 
+        // Check if item is already in list (by name)
+        var index = appList.indexOf(appList.find { x -> x.appName == newAppItem.appName })
+
+        // index is -1 if Item was not in List
         if(index != -1)
         {
-            // if it is: remove the old entry
+            // remove the entry
             appList.removeAt(index)
             // then notify change at removed position
             this.notifyItemRemoved(index);
         }
 
+        if(!includeUnusedApps)
+        {
+            if(usageStats.totalTimeInForeground == (0).toLong())
+            {
+                return
+            }
+        }
+
         // find out where in the List the new entry fits (sorted descending by usage time)
-        val newAppItem = App(icon, name, usage, category)
         index = getNewItemIndex(newAppItem)
 
         // add new entry
@@ -68,8 +80,7 @@ class RecyclerAdapterAppItem () : RecyclerView.Adapter<RecyclerAdapterAppItem.My
     {
         for(item : App in appList)
         {
-            // ToDo: Write Comparator for String time!!
-            if(item.usageTime < itemToInsert.usageTime)
+            if(item.useTime < itemToInsert.useTime)
             {
                 return appList.indexOf(item)
             }
