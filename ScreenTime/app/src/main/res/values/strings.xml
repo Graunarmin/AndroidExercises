@@ -1,7 +1,16 @@
 <resources>
+    <!-- Permission Check-->
     <string name="app_name">ScreenTime</string>
     <string name="permission_button">Show Screen Time</string>
+
+    <!-- Screen-Time MainActivity-->
+    <string name="date_headline">Heute, 3. Februar</string>
+    <string name="total_screentime">2h 35min</string>
+
+    <string name="toggle_Apps">Apps</string>
+    <string name="toggle_Categories">Categories</string>
+
     <string name="refresh_button">Refresh</string>
-    <string name="homescreen_headline">Screen Time</string>
     <string name="incl_unused_app_check">Include unused apps</string>
+
 </resources>

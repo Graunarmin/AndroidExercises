@@ -10,25 +10,25 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class RecyclerAdapterAppItem () : RecyclerView.Adapter<RecyclerAdapterAppItem.MyViewHolder>()
+class RecyclerAdapterAppItem () : RecyclerView.Adapter<RecyclerAdapterAppItem.AppViewHolder>()
 {
     var appList = ArrayList<App>()
 
-    class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    class AppViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     {
         val ivAppIcon: ImageView = itemView.findViewById(R.id.ivAppIcon)
         val tvAppName: TextView = itemView.findViewById(R.id.tvAppName)
         val tvUsageTime: TextView = itemView.findViewById(R.id.tvUsageTime)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapterAppItem.MyViewHolder
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapterAppItem.AppViewHolder
     {
         //Layout Inflater creates an Object from the "Blueprint" of a Layout Class: inflate turns Object into ViewObject
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.example_item, parent, false)
-        return MyViewHolder(itemView)
+        return AppViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: RecyclerAdapterAppItem.MyViewHolder, position: Int)
+    override fun onBindViewHolder(holder: RecyclerAdapterAppItem.AppViewHolder, position: Int)
     {
         val currentItem = appList[position]
         holder.ivAppIcon.setImageDrawable(currentItem.appIcon)
