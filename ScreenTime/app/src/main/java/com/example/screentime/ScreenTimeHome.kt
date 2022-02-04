@@ -8,21 +8,29 @@ import android.widget.*
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.screentime.recycleadapter.RecyclerAdapterAppItem
+import com.example.screentime.recycleadapter.RecyclerAdapterCategoryItem
 import java.util.*
 
+private const val TAG = "<DEBUG> com.example.screentime.ScreenTimeHome"
 class ScreenTimeHome : AppCompatActivity()
 {
     private val appAdapter = RecyclerAdapterAppItem()
+    private val categoryAdapter = RecyclerAdapterCategoryItem()
 
-    private lateinit var tvHomeScreenHeadline: TextView
-    private lateinit var rvUsageList: RecyclerView
-    private lateinit var btnRefresh: Button
-    private lateinit var chkUnusedApps: CheckBox
+    private lateinit var tvDateHeadline: TextView
+    private lateinit var tvTotalScreenTimeToday: TextView
     private lateinit var tglBtnApps: ToggleButton
     private lateinit var tglBtnCategories: ToggleButton
     private lateinit var vfRecyclerViews: ViewFlipper
+    private lateinit var rvAppUsageList: RecyclerView
+    private lateinit var rvCategoryUsageList: RecyclerView
+    private lateinit var btnRefresh: Button
+    private lateinit var chkUnusedApps: CheckBox
 
     private var includeUnusedApps: Boolean = false
+    private var showApps: Boolean = true
+    private var showCategories: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,27 +40,35 @@ class ScreenTimeHome : AppCompatActivity()
         setListeners()
         setAdapter()
 
-        getDailyUsageStats()
+        startPosition()
     }
 
     private fun initMembers()
     {
-        rvUsageList = findViewById(R.id.rvAppUsageList)
-        btnRefresh = findViewById(R.id.btnRefresh)
-        tvHomeScreenHeadline = findViewById(R.id.tvTotalScreenTimeToday)
-        chkUnusedApps = findViewById(R.id.chkUnusedApps)
+        tvDateHeadline = findViewById(R.id.tvDateHeadline)
+        tvTotalScreenTimeToday = findViewById(R.id.tvTotalScreenTimeToday)
         tglBtnApps = findViewById(R.id.tglBtnApps)
         tglBtnCategories = findViewById(R.id.tglBtnCategories)
         vfRecyclerViews = findViewById(R.id.vfRecyclerViews)
+        rvAppUsageList = findViewById(R.id.rvAppUsageList)
+        rvCategoryUsageList = findViewById(R.id.rvCategoryUsageList)
+        btnRefresh = findViewById(R.id.btnRefresh)
+        chkUnusedApps = findViewById(R.id.chkUnusedApps)
     }
 
     private fun setAdapter()
     {
-        val layoutManager = LinearLayoutManager(this)
-        rvUsageList.layoutManager = layoutManager
-        rvUsageList.itemAnimator = DefaultItemAnimator()
-        rvUsageList.adapter = appAdapter
-        rvUsageList.setHasFixedSize(true)
+        val layoutManagerApps = LinearLayoutManager(this)
+        rvAppUsageList.layoutManager = layoutManagerApps
+        rvAppUsageList.itemAnimator = DefaultItemAnimator()
+        rvAppUsageList.adapter = appAdapter
+        rvAppUsageList.setHasFixedSize(true)
+
+        val layoutManagerCat = LinearLayoutManager(this)
+        rvCategoryUsageList.layoutManager = layoutManagerCat
+        rvCategoryUsageList.itemAnimator = DefaultItemAnimator()
+        rvCategoryUsageList.adapter = categoryAdapter
+        rvCategoryUsageList.setHasFixedSize(true)
     }
 
     private fun setListeners()
@@ -70,28 +86,40 @@ class ScreenTimeHome : AppCompatActivity()
 
         tglBtnApps.setOnCheckedChangeListener {
             compoundButton, isChecked ->
-            tglBtnCategories.isChecked = !isChecked
-            if(isChecked)
-            {
-                showUsageByAppToday()
+            showApps = isChecked
 
-            }
-            else
+            if(showApps)
             {
-                showUsageByCategoryToday()
+                if(showCategories)
+                {
+                    tglBtnCategories.isChecked = !isChecked
+                }
+                vfRecyclerViews.displayedChild = 0
+                getDailyUsageStats()
             }
+
+        }
+
+        tglBtnCategories.setOnCheckedChangeListener {
+            compoundButton, isChecked ->
+            showCategories = isChecked
+
+            if(showCategories)
+            {
+                if(showApps)
+                {
+                    tglBtnApps.isChecked = !isChecked
+                }
+                vfRecyclerViews.displayedChild = 1
+                getDailyUsageStats()
+            }
+
         }
     }
 
-    private fun showUsageByAppToday()
+    private fun startPosition()
     {
-        getDailyUsageStats()
-        vfRecyclerViews.displayedChild = 0
-    }
-
-    private fun showUsageByCategoryToday()
-    {
-        vfRecyclerViews.displayedChild = 1
+        tglBtnApps.isChecked = true
     }
 
     private fun getDailyUsageStats()
@@ -108,6 +136,12 @@ class ScreenTimeHome : AppCompatActivity()
         {
             appAdapter.addItem(usageStatsList[i], this.applicationContext, includeUnusedApps)
         }
+
+        if(showCategories)
+        {
+            categoryAdapter.computeCategoryUsage(this.applicationContext)
+        }
+
 
     }
 }

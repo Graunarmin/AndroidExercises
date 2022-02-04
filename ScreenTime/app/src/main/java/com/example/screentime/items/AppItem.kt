@@ -1,4 +1,4 @@
-package com.example.screentime
+package com.example.screentime.items
 
 import android.app.usage.UsageStats
 import android.content.Context
@@ -6,17 +6,16 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
-import java.util.concurrent.TimeUnit
+import com.example.screentime.R
 
-data class App (var usageStats: UsageStats, var context: Context)
+data class AppItem (var usageStats: UsageStats, var context: Context) : Item
 {
     private val appInfo = appInfoAvailable(usageStats)
 
-    var appName = appName()
-    var appIcon = appIcon()
-    var appCategory = appCategory()
-    val useTime = usageStats.totalTimeInForeground
-    val readableUseTime = formatUsageTime()
+    override var name = appName()
+    override var icon = appIcon()
+    var category = appCategory()
+    override val useTime = usageStats.totalTimeInForeground
 
     private fun appName(): String
     {
@@ -35,12 +34,12 @@ data class App (var usageStats: UsageStats, var context: Context)
         return ContextCompat.getDrawable(context, R.drawable.ic_android)
     }
 
-    private fun appCategory(): String
+    private fun appCategory(): Int
     {
         if(appInfo != null){
-            return appInfo.category.toString()
+            return appInfo.category
         }
-        return (-1).toString()
+        return -1
     }
 
     private fun appInfoAvailable(usageStats: UsageStats) : ApplicationInfo?
@@ -53,14 +52,6 @@ data class App (var usageStats: UsageStats, var context: Context)
             null
         }
     }
-
-    private fun formatUsageTime(): String
-    {
-        return String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(useTime),
-                             TimeUnit.MILLISECONDS.toMinutes(useTime) % TimeUnit.HOURS.toMinutes(1),
-                             TimeUnit.MILLISECONDS.toSeconds(useTime) % TimeUnit.MINUTES.toSeconds(1))
-    }
-
 
 }
 

@@ -10,18 +10,18 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/ivAppIcon"
+            android:id="@+id/ivIcon"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginEnd="8dp"
             android:src="@drawable/ic_android" />
 
         <TextView
-            android:id="@+id/tvAppName"
+            android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_toEndOf="@id/ivAppIcon"
+            android:layout_toEndOf="@id/ivIcon"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -31,10 +31,10 @@
             android:id="@+id/tvUsageTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAppName"
+            android:layout_below="@+id/tvName"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/ivAppIcon"
+            android:layout_toEndOf="@+id/ivIcon"
             android:textColor="@color/black"
             android:textSize="15sp"
             tools:text="Line 2" />

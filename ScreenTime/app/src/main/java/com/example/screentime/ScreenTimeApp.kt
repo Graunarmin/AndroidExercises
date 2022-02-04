@@ -1,8 +1,9 @@
 package com.example.screentime
 
 import android.app.Application
+import com.example.screentime.items.AppItem
 
-class ScreenTimeApp(data: String) : Application()
+class ScreenTimeApp : Application()
 {
     companion object
     {
@@ -14,7 +15,6 @@ class ScreenTimeApp(data: String) : Application()
         appInstance = this
     }
 
-    var appList: ArrayList<App> = ArrayList<App>()
+    var appList: ArrayList<AppItem> = ArrayList<AppItem>()
 
-    fun addEvent(){}
 }
