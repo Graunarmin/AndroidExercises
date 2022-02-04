@@ -2,6 +2,8 @@ package com.example.screentime
 
 import android.app.Application
 import com.example.screentime.items.AppItem
+import com.example.screentime.utils.formatUsageTime
+import com.example.screentime.utils.hourMinFormat
 import java.util.concurrent.TimeUnit
 
 class ScreenTimeApp : Application()
@@ -23,12 +25,7 @@ class ScreenTimeApp : Application()
     {
         var time: Long = 0
         appList.forEach { app ->  time += app.useTime}
-        totalScreenTime = formatUsageTime(time)
+        totalScreenTime = hourMinFormat(time)
     }
 
-    fun formatUsageTime(time: Long): String
-    {
-        return String.format("%dh %02dm", TimeUnit.MILLISECONDS.toHours(time),
-                             TimeUnit.MILLISECONDS.toMinutes(time) % TimeUnit.HOURS.toMinutes(1))
-    }
 }

@@ -20,3 +20,9 @@ fun formatUsageTime(time: Long): String
                          TimeUnit.MILLISECONDS.toMinutes(time) % TimeUnit.HOURS.toMinutes(1),
                          TimeUnit.MILLISECONDS.toSeconds(time) % TimeUnit.MINUTES.toSeconds(1))
 }
+
+fun hourMinFormat(time: Long) : String
+{
+    return String.format("%dh %02dm", TimeUnit.MILLISECONDS.toHours(time),
+                         TimeUnit.MILLISECONDS.toMinutes(time) % TimeUnit.HOURS.toMinutes(1))
+}
