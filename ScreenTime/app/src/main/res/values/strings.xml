@@ -11,6 +11,6 @@
     <string name="toggle_Categories">Categories</string>
 
     <string name="refresh_button">Refresh</string>
-    <string name="incl_unused_app_check">Include unused apps</string>
+    <string name="incl_unused_app_check">Include unused</string>
 
 </resources>

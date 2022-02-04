@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.screentime.recycleadapter.RecyclerAdapterAppItem
 import com.example.screentime.recycleadapter.RecyclerAdapterCategoryItem
+import com.example.screentime.utils.dayMonthFormat
+import java.time.LocalDate
 import java.util.*
 
 private const val TAG = "<DEBUG> com.example.screentime.ScreenTimeHome"
@@ -28,7 +30,7 @@ class ScreenTimeHome : AppCompatActivity()
     private lateinit var btnRefresh: Button
     private lateinit var chkUnusedApps: CheckBox
 
-    private var includeUnusedApps: Boolean = false
+    private var includeUnused: Boolean = false
     private var showApps: Boolean = true
     private var showCategories: Boolean = false
 
@@ -79,7 +81,7 @@ class ScreenTimeHome : AppCompatActivity()
 
         chkUnusedApps.setOnClickListener {
             if(it is CheckBox){
-                includeUnusedApps = it.isChecked
+                includeUnused = it.isChecked
                 getDailyUsageStats()
             }
         }
@@ -134,14 +136,18 @@ class ScreenTimeHome : AppCompatActivity()
 
         for (i in usageStatsList.indices)
         {
-            appAdapter.addItem(usageStatsList[i], this.applicationContext, includeUnusedApps)
+            appAdapter.addItem(usageStatsList[i], this.applicationContext, includeUnused)
         }
 
         if(showCategories)
         {
-            categoryAdapter.computeCategoryUsage(this.applicationContext)
+            categoryAdapter.computeCategoryUsage(this.applicationContext, includeUnused)
         }
-
+        ScreenTimeApp.appInstance.updateTotalScreenTime()
+        tvTotalScreenTimeToday.text = ScreenTimeApp.appInstance.totalScreenTime
+        tvDateHeadline.text = dayMonthFormat(LocalDate.now())
 
     }
 }
+
+// https://stonesoupprogramming.com/2017/11/17/kotlin-string-formatting/

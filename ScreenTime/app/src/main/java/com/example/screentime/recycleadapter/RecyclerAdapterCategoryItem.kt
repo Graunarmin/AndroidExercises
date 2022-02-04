@@ -9,7 +9,7 @@ import com.example.screentime.items.CategoryItem
 private const val TAG = "<DEBUG> com.example.screentime.appcategories.RecyclerAdapterCategories"
 class RecyclerAdapterCategoryItem() : RecyclerAdapterItem()
 {
-    public fun computeCategoryUsage(context: Context)
+    public fun computeCategoryUsage(context: Context, includeUnusedCategories: Boolean)
     {
         val appList = ScreenTimeApp.appInstance.appList
 
@@ -20,17 +20,7 @@ class RecyclerAdapterCategoryItem() : RecyclerAdapterItem()
                                                appList.filter{ app -> app.category == category.index } as ArrayList<AppItem>,
                                                context)
 
-            var index = itemList.indexOf(itemList.find { x -> x.name == newCategoryItem.name})
-
-            if(index != -1)
-            {
-                itemList.removeAt(index)
-                this.notifyItemRemoved(index)
-            }
-
-            index = getNewItemIndex(newCategoryItem)
-            itemList.add(index, newCategoryItem)
-            this.notifyItemInserted(index)
+            updateEntry(newCategoryItem, includeUnusedCategories, this)
         }
     }
 }

@@ -40,7 +40,55 @@ open class RecyclerAdapterItem : RecyclerView.Adapter<RecyclerAdapterItem.ItemVi
         return itemList.size
     }
 
-    protected fun getNewItemIndex(itemToInsert: Item): Int
+
+    private fun removeOldEntry(index: Int, adapter: RecyclerAdapterItem)
+    {
+        // index is -1 if Item was not in List
+        if(index != -1)
+        {
+            // remove the entry
+            itemList.removeAt(index)
+            // then notify change at removed position
+            adapter.notifyItemRemoved(index)
+        }
+    }
+
+    private fun addNewEntry(newItem: Item, index: Int, adapter: RecyclerAdapterItem)
+    {
+        // add new entry
+        itemList.add(index, newItem)
+
+        // then notify change at added position
+        adapter.notifyItemInserted(index)
+    }
+
+    protected fun updateEntry(newItem: Item, includeUnused: Boolean, adapter: RecyclerAdapterItem)
+    {
+        // 1. check if item is already in List
+        var index = itemList.indexOf(itemList.find { x -> x.name == newItem.name })
+
+        // 2. if so, remove it
+        removeOldEntry(index, adapter)
+
+        // 3. check if unused items should be included
+        if(!includeUnused)
+        {
+            // 4. check if usagetime is 0
+            if(!newItem.wasUsed)
+            {
+                // 5. if so, return
+                return
+            }
+        }
+
+        // 6. find out where in the List the new entry fits (sorted descending by usage time)
+        index = getNewEntryIndex(newItem)
+
+        //7. the add the new entry to the list
+        addNewEntry(newItem, index, adapter)
+    }
+
+    protected fun getNewEntryIndex(itemToInsert: Item): Int
     {
         for (item: Item in itemList)
         {

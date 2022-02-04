@@ -1,6 +1,7 @@
 package com.example.screentime.items
 
 import android.graphics.drawable.Drawable
+import com.example.screentime.utils.formatUsageTime
 import java.util.concurrent.TimeUnit
 
 interface Item
@@ -9,16 +10,9 @@ interface Item
     val icon: Drawable?
     val useTime: Long
     val readableUseTime: String
-        get() = formatUsageTime()
-
-
-
-    fun formatUsageTime(): String
-    {
-        return String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(useTime),
-                             TimeUnit.MILLISECONDS.toMinutes(useTime) % TimeUnit.HOURS.toMinutes(1),
-                             TimeUnit.MILLISECONDS.toSeconds(useTime) % TimeUnit.MINUTES.toSeconds(1))
-    }
+        get() = formatUsageTime(useTime)
+    val wasUsed: Boolean
+        get() = (useTime != 0L)
 
     operator fun compareTo(other: Item): Int
     {

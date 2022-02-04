@@ -3,6 +3,7 @@ package com.example.screentime.items
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
+import com.example.screentime.R
 
 data class CategoryItem (var category: AppCategory, var apps: ArrayList<AppItem>, var context: Context) :
         Item
@@ -21,6 +22,7 @@ data class CategoryItem (var category: AppCategory, var apps: ArrayList<AppItem>
 
     private fun categoryIcon() : Drawable?
     {
+        //ToDo: Find out why no Icon is shown
         return ContextCompat.getDrawable(context, category.imageResource)
     }
 }
