@@ -1,7 +1,7 @@
 <resources>
     <!-- Permission Check-->
     <string name="app_name">ScreenTime</string>
-    <string name="permission_button">Show Screen Time</string>
+    <string name="permission_button">System Setting</string>
 
     <!-- Screen-Time MainActivity-->
     <string name="date_headline">Heute, 3. Februar</string>

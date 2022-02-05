@@ -23,7 +23,7 @@ open class RecyclerAdapterItem : RecyclerView.Adapter<RecyclerAdapterItem.ItemVi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder
     {
         //Layout Inflater creates an Object from the "Blueprint" of a Layout Class: inflate turns Object into ViewObject
-        val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.example_item, parent, false)
+        val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.screentime_item, parent, false)
         return ItemViewHolder(itemView)
     }
 

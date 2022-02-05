@@ -14,8 +14,8 @@ import com.example.screentime.utils.dayMonthFormat
 import java.time.LocalDate
 import java.util.*
 
-private const val TAG = "<DEBUG> com.example.screentime.ScreenTimeHome"
-class ScreenTimeHome : AppCompatActivity()
+private const val TAG = "<DEBUG> com.example.screentime.ScreenTimeOverview"
+class ScreenTimeOverviewActivity : AppCompatActivity()
 {
     private val appAdapter = RecyclerAdapterAppItem()
     private val categoryAdapter = RecyclerAdapterCategoryItem()
@@ -36,7 +36,7 @@ class ScreenTimeHome : AppCompatActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.screen_time_home)
+        setContentView(R.layout.activity_screen_time_overview)
 
         initMembers()
         setListeners()
@@ -90,6 +90,7 @@ class ScreenTimeHome : AppCompatActivity()
             compoundButton, isChecked ->
             showApps = isChecked
 
+            // ToDo: FIX Toggle
             if(showApps)
             {
                 if(showCategories)
@@ -99,13 +100,13 @@ class ScreenTimeHome : AppCompatActivity()
                 vfRecyclerViews.displayedChild = 0
                 getDailyUsageStats()
             }
-
         }
 
         tglBtnCategories.setOnCheckedChangeListener {
             compoundButton, isChecked ->
             showCategories = isChecked
 
+            // ToDo: FIX Toggle
             if(showCategories)
             {
                 if(showApps)

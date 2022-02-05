@@ -21,8 +21,14 @@ import android.provider.Settings
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initMembers()
-        setOnClickListeners()
+        if(checkForPermission())
+        {
+            startNewIntent()
+        }else
+        {
+            initMembers()
+            setOnClickListeners()
+        }
     }
 
      private fun initMembers()
@@ -61,14 +67,16 @@ import android.provider.Settings
      }
 
      private fun startNewIntent(){
-         val intent = Intent(this, ScreenTimeHome::class.java)
+         val intent = Intent(this, ScreenTimeOverviewActivity::class.java)
          startActivity(intent)
      }
 
      override fun onResume()
      {
          super.onResume()
-
+         if(checkForPermission())
+         {
+             startNewIntent()
+         }
      }
-
  }

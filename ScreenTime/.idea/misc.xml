@@ -6,9 +6,18 @@
         <entry key="app/src/main/res/drawable/games_ic.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/ic_android.xml" value="0.3921875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3921875" />
+        <entry key="app/src/main/res/layout/activity_screen_time_diagrams.xml" value="0.3619791666666667" />
+        <entry key="app/src/main/res/layout/diagram_card.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/example_item.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/limit_item.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/list_items.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/overview_card_limits.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/overview_card_most_used.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/overview_card_today.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/pie_chart.xml" value="0.33497536945812806" />
         <entry key="app/src/main/res/layout/screen_time_home.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/screen_time_overview.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/screentime_item.xml" value="0.37604166666666666" />
       </map>
     </option>
   </component>
