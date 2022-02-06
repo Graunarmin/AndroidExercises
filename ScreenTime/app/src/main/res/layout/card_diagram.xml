@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/chartTodayTotal"
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chartBarChart"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.github.mikephil.charting.charts.PieChart>
+    </com.github.mikephil.charting.charts.BarChart>
 
 </androidx.cardview.widget.CardView>

@@ -1,16 +1,25 @@
 <resources>
     <!-- Permission Check-->
     <string name="app_name">ScreenTime</string>
-    <string name="permission_button">System Setting</string>
+    <string name="btn_permission">System Setting</string>
 
-    <!-- Screen-Time MainActivity-->
-    <string name="date_headline">Heute, 3. Februar</string>
+    <!-- Screen-Time Overview-->
+    <string name="description_scrollview">This is an overview of the screentime</string>
+    <string name="description_viewflipper">This view flips between apps and categories</string>
+    <string name="description_app_icon">The icon of the app</string>
+    <string name="description_arrow_right">An arrow pointing to the right</string>
+
+    <string name="date_headline">Screentime today, February 6th</string>
     <string name="total_screentime">2h 35min</string>
 
-    <string name="toggle_Apps">Apps</string>
-    <string name="toggle_Categories">Categories</string>
+    <string name="most_used_overview">Most Used</string>
+    <string name="toggle_Apps">Show Apps</string>
+    <string name="toggle_Categories">Show Categories</string>
+    <string name="chk_incl_unused_app_check">Include unused</string>
+    <string name="btn_more">More</string>
 
-    <string name="refresh_button">Refresh</string>
-    <string name="incl_unused_app_check">Include unused</string>
+    <string name="limits_overview">Limits</string>
+    <string name="btn_edit_limits">Edit Limits</string>
+    <string name="edit_limit">Edit</string>
 
 </resources>

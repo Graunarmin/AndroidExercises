@@ -2,6 +2,7 @@ package com.example.screentime
 
 import android.app.Application
 import com.example.screentime.items.AppItem
+import com.example.screentime.items.CategoryItem
 import com.example.screentime.utils.formatUsageTime
 import com.example.screentime.utils.hourMinFormat
 import java.util.concurrent.TimeUnit
@@ -19,6 +20,8 @@ class ScreenTimeApp : Application()
     }
 
     var appList: ArrayList<AppItem> = ArrayList<AppItem>()
+    var categoryTimesList: ArrayList<CategoryItem> = ArrayList<CategoryItem>()
+
     var totalScreenTime: String = ""
 
     public fun updateTotalScreenTime()

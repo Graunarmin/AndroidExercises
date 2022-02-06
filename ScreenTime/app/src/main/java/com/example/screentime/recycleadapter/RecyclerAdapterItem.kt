@@ -23,7 +23,7 @@ open class RecyclerAdapterItem : RecyclerView.Adapter<RecyclerAdapterItem.ItemVi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder
     {
         //Layout Inflater creates an Object from the "Blueprint" of a Layout Class: inflate turns Object into ViewObject
-        val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.screentime_item, parent, false)
+        val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.card_item_screentime, parent, false)
         return ItemViewHolder(itemView)
     }
 
@@ -66,6 +66,10 @@ open class RecyclerAdapterItem : RecyclerView.Adapter<RecyclerAdapterItem.ItemVi
     {
         // 1. check if item is already in List
         var index = itemList.indexOf(itemList.find { x -> x.name == newItem.name })
+        if(newItem.name == "Pixel Launcher")
+        {
+            return
+        }
 
         // 2. if so, remove it
         removeOldEntry(index, adapter)
@@ -73,7 +77,7 @@ open class RecyclerAdapterItem : RecyclerView.Adapter<RecyclerAdapterItem.ItemVi
         // 3. check if unused items should be included
         if(!includeUnused)
         {
-            // 4. check if usagetime is 0
+            // 4. check if use time is 0
             if(!newItem.wasUsed)
             {
                 // 5. if so, return

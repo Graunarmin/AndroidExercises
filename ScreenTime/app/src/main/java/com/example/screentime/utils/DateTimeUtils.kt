@@ -26,3 +26,8 @@ fun hourMinFormat(time: Long) : String
     return String.format("%dh %02dm", TimeUnit.MILLISECONDS.toHours(time),
                          TimeUnit.MILLISECONDS.toMinutes(time) % TimeUnit.HOURS.toMinutes(1))
 }
+
+fun longMillisToFloatMinutes(time: Long) : Float
+{
+    return TimeUnit.MILLISECONDS.toMinutes(time).toFloat()
+}

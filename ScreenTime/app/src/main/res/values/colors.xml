@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- https://flatuicolors.com/palette/de -->
+    <color name="desire">#eb3b5a</color>
+    <color name="beniukon_bronze">#fa8231</color>
+    <color name="nyc_taxy">#f7b731</color>
+    <color name="algal_fuel">#20bf6b</color>
+    <color name="turquoise_topaz">#0fb9b1</color>
+    <color name="high_blue">#45aaf2</color>
+    <color name="c64_ntsc">#4b7bec</color>
+    <color name="lighter_purple">#a55eea</color>
+    <color name="twinkle_blue">#d1d8e0</color>
+    <color name="blue_gray">#778ca3</color>
+    <color name="blue_horizon">#4b6584</color>
+
 </resources>

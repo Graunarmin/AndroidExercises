@@ -2,6 +2,7 @@ package com.example.screentime.items
 
 import android.graphics.drawable.Drawable
 import com.example.screentime.utils.formatUsageTime
+import com.github.mikephil.charting.data.PieEntry
 import java.util.concurrent.TimeUnit
 
 interface Item
@@ -18,6 +19,5 @@ interface Item
     {
         return compareValues(useTime, other.useTime)
     }
-
 
 }
