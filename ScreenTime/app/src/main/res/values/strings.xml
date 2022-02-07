@@ -16,10 +16,15 @@
     <string name="toggle_Apps">Show Apps</string>
     <string name="toggle_Categories">Show Categories</string>
     <string name="chk_incl_unused_app_check">Include unused</string>
+    <string name="chk_incl_pixel_launcher">Include Pixel Launcher</string>
     <string name="btn_more">More</string>
 
     <string name="limits_overview">Limits</string>
     <string name="btn_edit_limits">Edit Limits</string>
     <string name="edit_limit">Edit</string>
 
+    <!-- App Details -->
+    <string name="app_details_limits_Label">Limit</string>
+    <string name="no_limit">No Limit</string>
+    <string name="btn_add_limit">Edit</string>
 </resources>

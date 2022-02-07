@@ -1,11 +1,14 @@
 package com.example.screentime
 
 import android.app.Application
-import com.example.screentime.items.AppItem
-import com.example.screentime.items.CategoryItem
-import com.example.screentime.utils.formatUsageTime
+import android.content.pm.ApplicationInfo
+import com.example.screentime.categories.AppCategory
+import com.example.screentime.categories.CategoriesList
+import com.example.screentime.timeitems.AppTimeItem
+import com.example.screentime.timeitems.CategoryTimeItem
 import com.example.screentime.utils.hourMinFormat
-import java.util.concurrent.TimeUnit
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ScreenTimeApp : Application()
 {
@@ -14,20 +17,26 @@ class ScreenTimeApp : Application()
         lateinit var appInstance: ScreenTimeApp
     }
 
+
     init
     {
         appInstance = this
+
     }
 
-    var appList: ArrayList<AppItem> = ArrayList<AppItem>()
-    var categoryTimesList: ArrayList<CategoryItem> = ArrayList<CategoryItem>()
+    var appTimesList: ArrayList<AppTimeItem> = ArrayList<AppTimeItem>()
+    var categoryTimesList: ArrayList<CategoryTimeItem> = ArrayList<CategoryTimeItem>()
+
+    var appList: ArrayList<AppTimeItem> = ArrayList()
+    lateinit var categoriesList: CategoriesList
+
 
     var totalScreenTime: String = ""
 
     public fun updateTotalScreenTime()
     {
         var time: Long = 0
-        appList.forEach { app ->  time += app.useTime}
+        appTimesList.forEach { app ->  time += app.useTime}
         totalScreenTime = hourMinFormat(time)
     }
 

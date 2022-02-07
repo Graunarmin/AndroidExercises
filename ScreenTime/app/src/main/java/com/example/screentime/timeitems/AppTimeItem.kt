@@ -1,4 +1,4 @@
-package com.example.screentime.items
+package com.example.screentime.timeitems
 
 import android.app.usage.UsageStats
 import android.content.Context
@@ -7,8 +7,9 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.example.screentime.R
+import com.example.screentime.ScreenTimeApp
 
-data class AppItem (var usageStats: UsageStats, var context: Context) : Item
+data class AppTimeItem (var usageStats: UsageStats, var context: Context) : TimeItem
 {
     private val appInfo = appInfoAvailable(usageStats)
 

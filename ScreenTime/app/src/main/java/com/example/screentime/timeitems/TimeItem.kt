@@ -1,11 +1,9 @@
-package com.example.screentime.items
+package com.example.screentime.timeitems
 
 import android.graphics.drawable.Drawable
 import com.example.screentime.utils.formatUsageTime
-import com.github.mikephil.charting.data.PieEntry
-import java.util.concurrent.TimeUnit
 
-interface Item
+interface TimeItem
 {
     val name: String
     val icon: Drawable?
@@ -15,7 +13,7 @@ interface Item
     val wasUsed: Boolean
         get() = (useTime != 0L)
 
-    operator fun compareTo(other: Item): Int
+    operator fun compareTo(other: TimeItem): Int
     {
         return compareValues(useTime, other.useTime)
     }

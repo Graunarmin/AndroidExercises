@@ -1,6 +1,5 @@
-package com.example.screentime.items
+package com.example.screentime.categories
 
-import android.graphics.Color
 import com.example.screentime.R
 
 enum class AppCategory(val printableName: String, val index: Int, val imageResource: Int, val color: Int)

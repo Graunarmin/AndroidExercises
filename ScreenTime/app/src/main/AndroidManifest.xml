@@ -10,17 +10,17 @@
     <application
         android:name=".ScreenTimeApp"
         android:allowBackup="true"
+        android:appCategory="game"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:appCategory="game"
         android:theme="@style/Theme.ScreenTime">
         <activity
-            android:name=".ScreenTimeDiagramsActivity"
+            android:name=".LimitActivity"
             android:exported="false" />
         <activity
-            android:name=".PieChartActivity"
+            android:name=".AppDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".ScreenTimeOverviewActivity"

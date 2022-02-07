@@ -1,12 +1,12 @@
-package com.example.screentime.items
+package com.example.screentime.timeitems
 
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
-import com.example.screentime.R
+import com.example.screentime.categories.AppCategory
 
-data class CategoryItem (var category: AppCategory, var apps: ArrayList<AppItem>, var context: Context) :
-        Item
+data class CategoryTimeItem (var category: AppCategory, var apps: ArrayList<AppTimeItem>, var context: Context) :
+        TimeItem
 {
     override val name = category.printableName
     override val icon = categoryIcon()

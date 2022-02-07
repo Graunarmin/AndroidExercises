@@ -4,15 +4,14 @@ import android.content.Context
 import android.graphics.Color
 import androidx.core.content.ContextCompat
 import com.example.screentime.ScreenTimeApp
-import com.example.screentime.items.CategoryItem
-import com.example.screentime.utils.longMillisToFloatMinutes
+import com.example.screentime.timeitems.CategoryTimeItem
+import com.example.screentime.utils.*
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
 
 // https://www.programmersought.com/article/17146031876/
 // https://www.programmersought.com/article/99524092993/
@@ -30,26 +29,29 @@ class PieChartCreator()
         val entries : ArrayList<PieEntry> = getData(context)
 
         val data : PieData = PieData(createDataSet(entries, colors, "Screen Time Today"))
-        data.setDrawValues(true)
-        data.setValueFormatter(PercentFormatter(pieChart))
-        data.setValueTextSize(12f)
-        data.setValueTextColor(Color.BLACK)
 
-        pieChart.legend.setCustom(legendLabels)
+        pieChart.rotationAngle = 45f
 
         pieChart.data = data
         pieChart.invalidate()
     }
     private fun setUpPieChart(pieChart: PieChart, centerText: String)
     {
+        // Donut
         pieChart.isDrawHoleEnabled = true
+        pieChart.holeRadius = (pieChart.holeRadius) * 0.8f
+
+        // Text in the Center
         pieChart.centerText = centerText
         pieChart.setCenterTextSize(18f)
 
-        pieChart.setUsePercentValues(true)
-        pieChart.setDrawEntryLabels(true);
+        // Labels
+        pieChart.setDrawEntryLabels(false);
         pieChart.setEntryLabelTextSize(12f)
         pieChart.setEntryLabelColor(Color.BLACK)
+
+        // Values
+        pieChart.setUsePercentValues(false)
 
         pieChart.description.isEnabled = false
     }
@@ -60,7 +62,7 @@ class PieChartCreator()
         legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
         legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
         legend.orientation = Legend.LegendOrientation.HORIZONTAL
-        legend.xOffset = 10f;  //Offset of legend x
+        //legend.xOffset = 10f;  //Offset of legend x
 
         legend.form = Legend.LegendForm.CIRCLE
         legend.setDrawInside(false)
@@ -72,10 +74,14 @@ class PieChartCreator()
     {
         val entries : ArrayList<PieEntry> = ArrayList()
 
-        for (categoryItem : CategoryItem in ScreenTimeApp.appInstance.categoryTimesList)
+        for (categoryItem : CategoryTimeItem in ScreenTimeApp.appInstance.categoryTimesList)
         {
             val entry = PieEntry(longMillisToFloatMinutes(categoryItem.useTime), categoryItem.name)
-            entry.label = categoryItem.readableUseTime
+            //exclude entries that are too small
+            if (entry.value < 2f)
+            {
+                break
+            }
             entries.add(entry)
             colors.add(ContextCompat.getColor(context, categoryItem.category.color))
         }
@@ -85,19 +91,25 @@ class PieChartCreator()
 
     private fun createDataSet(data: ArrayList<PieEntry>, colors: ArrayList<Int>, label: String) : PieDataSet
     {
-        val dataSet: PieDataSet = PieDataSet(data, label)
+        val dataSet: PieDataSet = PieDataSet(data, "")
         dataSet.colors = colors
 
-        //dataSet.valueLinePart1OffsetPercentage = 80f;
+        // Connecting line
+        dataSet.valueLinePart1OffsetPercentage = 80f;
+        dataSet.valueLineColor = Color.LTGRAY;
 
-        //Set the color of the connecting line
-        //dataSet.valueLineColor = Color.LTGRAY;
-        // The connecting line is outside the pie chart
+        //Labels outside
         dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE;
+
+        //Values outside
         dataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE;
 
-        dataSet.setDrawValues(false)
+        //Value Styling
+        dataSet.setDrawValues(true)
+        dataSet.valueTextSize = 12f
+        dataSet.valueTextColor = Color.BLACK
 
+        dataSet.valueFormatter = TimeFormatter()
 
         return dataSet
     }
