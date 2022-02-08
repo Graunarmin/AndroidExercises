@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import androidx.core.content.ContextCompat
 import com.example.screentime.ScreenTimeApp
-import com.example.screentime.timeitems.CategoryTimeItem
+import com.example.screentime.items.Item
 import com.example.screentime.utils.*
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -16,10 +16,10 @@ import com.github.mikephil.charting.data.PieEntry
 // https://www.programmersought.com/article/17146031876/
 // https://www.programmersought.com/article/99524092993/
 
+private const val TAG = "<-!-DEBUG-!-> com.example.screentime.charts.PieChartCreator"
 class PieChartCreator()
 {
     private var colors: ArrayList<Int> = ArrayList()
-    private var legendLabels: ArrayList<LegendEntry> = ArrayList()
 
     public fun createPieChart(pieChart: PieChart, centerText: String, context: Context)
     {
@@ -74,9 +74,9 @@ class PieChartCreator()
     {
         val entries : ArrayList<PieEntry> = ArrayList()
 
-        for (categoryItem : CategoryTimeItem in ScreenTimeApp.appInstance.categoryTimesList)
+        for (categoryItem : Item in ScreenTimeApp.appInstance.categoryList.getUsedCategories())
         {
-            val entry = PieEntry(longMillisToFloatMinutes(categoryItem.useTime), categoryItem.name)
+            val entry = PieEntry(longMillisToFloatMinutes(categoryItem.useTime), categoryItem.itemName)
             //exclude entries that are too small
             if (entry.value < 2f)
             {

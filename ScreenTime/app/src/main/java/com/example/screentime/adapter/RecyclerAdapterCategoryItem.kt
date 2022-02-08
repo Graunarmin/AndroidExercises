@@ -3,30 +3,26 @@ package com.example.screentime.adapter
 import android.content.Context
 import com.example.screentime.categories.AppCategory
 import com.example.screentime.ScreenTimeApp
-import com.example.screentime.timeitems.AppTimeItem
-import com.example.screentime.timeitems.CategoryTimeItem
-import com.example.screentime.timeitems.TimeItem
+import com.example.screentime.items.AppItem
+import com.example.screentime.items.CategoryItem
+import com.example.screentime.items.Item
+import com.example.screentime.items.ItemContainer
 
-private const val TAG = "<DEBUG> com.example.screentime.appcategories.RecyclerAdapterCategories"
+private const val TAG = "<DEBUG> com.example.screentime.adapter.RecyclerAdapterCategories"
 class RecyclerAdapterCategoryItem(itemClickListener: OnTimeItemClickListener) : RecyclerAdapterItem(itemClickListener)
 {
-    override var itemList: ArrayList<TimeItem> = ScreenTimeApp.appInstance.categoryTimesList as ArrayList<TimeItem>
+    override var itemList: ArrayList<Item> = ArrayList()
 
-    public fun computeCategoryUsage(context: Context, includeUnusedCategories: Boolean, includeLauncher: Boolean)
+    fun update()
     {
-        val appList = ScreenTimeApp.appInstance.appTimesList
+        var size = itemList.size
+        itemList.clear()
+        this.notifyItemRangeRemoved(0, size-1)
 
-        for (category in AppCategory.values())
-        {
+        itemList = ScreenTimeApp.appInstance.categoryList.getUsedCategories() as ArrayList<Item>
 
-            val apps : ArrayList<AppTimeItem> = appList.filter{ app -> app.category == category.index } as ArrayList<AppTimeItem>
-            val newCategoryItem = CategoryTimeItem(category,
-                                                   apps,
-                                                   context)
+        size = itemList.size
+        this.notifyItemRangeInserted(0, size-1)
 
-            //ScreenTimeApp.appInstance.addCategory(category, apps)
-
-            updateEntry(newCategoryItem, includeUnusedCategories, this, includeLauncher)
-        }
     }
 }

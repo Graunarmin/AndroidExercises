@@ -7,15 +7,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.screentime.R
-import com.example.screentime.timeitems.TimeItem
+import com.example.screentime.items.Item
+import com.example.screentime.items.ItemContainer
+
+private const val TAG = "<-!-DEBUG-!-> com.example.screentime.adapter.recycleradapteritem"
 
 interface OnTimeItemClickListener{
-    fun onTimeItemClicked(item: TimeItem)
+    fun onTimeItemClicked(item: Item)
 }
 
 open class RecyclerAdapterItem(var itemClickListener: OnTimeItemClickListener) : RecyclerView.Adapter<RecyclerAdapterItem.ItemViewHolder>()
 {
-    open var itemList = ArrayList<TimeItem>()
+    open var itemList : ArrayList<Item> = ArrayList()
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
@@ -23,7 +26,7 @@ open class RecyclerAdapterItem(var itemClickListener: OnTimeItemClickListener) :
         val tvName: TextView = itemView.findViewById(R.id.tvName)
         val tvUsageTime: TextView = itemView.findViewById(R.id.tvUsageTime)
 
-        fun bind(item: TimeItem, clickListener: OnTimeItemClickListener)
+        fun bind(item: Item, clickListener: OnTimeItemClickListener)
         {
             itemView.setOnClickListener{
                 clickListener.onTimeItemClicked(item)
@@ -41,7 +44,7 @@ open class RecyclerAdapterItem(var itemClickListener: OnTimeItemClickListener) :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int)
     {
         val currentItem = itemList[position]
-        holder.tvName.text = currentItem.name
+        holder.tvName.text = currentItem.itemName
         holder.ivIcon.setImageDrawable(currentItem.icon)
         holder.tvUsageTime.text = currentItem.readableUseTime
         holder.bind(currentItem, itemClickListener)
@@ -49,71 +52,6 @@ open class RecyclerAdapterItem(var itemClickListener: OnTimeItemClickListener) :
 
     override fun getItemCount(): Int
     {
-        return itemList.size
-    }
-
-
-    private fun removeOldEntry(index: Int, adapter: RecyclerAdapterItem)
-    {
-        // index is -1 if Item was not in List
-        if(index != -1)
-        {
-            // remove the entry
-            itemList.removeAt(index)
-            // then notify change at removed position
-            adapter.notifyItemRemoved(index)
-        }
-    }
-
-    private fun addNewEntry(newItem: TimeItem, index: Int, adapter: RecyclerAdapterItem)
-    {
-        // add new entry
-        itemList.add(index, newItem)
-
-        // then notify change at added position
-        adapter.notifyItemInserted(index)
-    }
-
-    protected fun updateEntry(newItem: TimeItem, includeUnused: Boolean, adapter: RecyclerAdapterItem, includeLauncher: Boolean)
-    {
-        // 1. check if item is already in List
-        var index = itemList.indexOf(itemList.find { x -> x.name == newItem.name })
-
-        // 2. if so, remove it
-        removeOldEntry(index, adapter)
-
-        if(!includeLauncher && (newItem.name == "Pixel Launcher"))
-        {
-            return
-        }
-
-        // 3. check if unused items should be included
-        if(!includeUnused)
-        {
-            // 4. check if use time is 0
-            if(!newItem.wasUsed)
-            {
-                // 5. if so, return
-                return
-            }
-        }
-
-        // 6. find out where in the List the new entry fits (sorted descending by usage time)
-        index = getNewEntryIndex(newItem)
-
-        //7. the add the new entry to the list
-        addNewEntry(newItem, index, adapter)
-    }
-
-    protected fun getNewEntryIndex(itemToInsert: TimeItem): Int
-    {
-        for (item: TimeItem in itemList)
-        {
-            if(item < itemToInsert)
-            {
-                return itemList.indexOf(item)
-            }
-        }
         return itemList.size
     }
 }

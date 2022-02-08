@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import com.example.screentime.R
-import com.example.screentime.categories.CategoriesList
+import com.example.screentime.categories.CategoriesMap
 
+private const val TAG = "<-!-DEBUG-!-> com.example.screentime.adapter.expandablelistadapter"
 class ExpandableListAdapterLimitChoices(var context: Context,
-                                        var categories : CategoriesList) : BaseExpandableListAdapter()
+                                        var categories : CategoriesMap) : BaseExpandableListAdapter()
 {
     override fun getGroupCount(): Int
     {

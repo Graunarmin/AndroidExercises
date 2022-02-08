@@ -2,7 +2,7 @@ package com.example.screentime.categories
 
 import com.example.screentime.R
 
-enum class AppCategory(val printableName: String, val index: Int, val imageResource: Int, val color: Int)
+enum class AppCategory(val printableName: String, val categoryId: Int, val imageResource: Int, val color: Int)
 {
     UNDEFINED("Undefined",-1, R.drawable.ic_undefined,R.color.blue_gray),
     GAME("Games", 0, R.drawable.ic_games, R.color.beniukon_bronze),

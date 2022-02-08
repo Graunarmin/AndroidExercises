@@ -5,22 +5,25 @@ import android.app.usage.UsageStatsManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.screentime.charts.PieChartCreator
-import com.example.screentime.timeitems.TimeItem
+import com.example.screentime.items.Item
 import com.example.screentime.adapter.OnTimeItemClickListener
 import com.example.screentime.adapter.RecyclerAdapterAppItem
 import com.example.screentime.adapter.RecyclerAdapterCategoryItem
-import com.example.screentime.categories.CategoriesList
+import com.example.screentime.categories.AppCategory
+import com.example.screentime.items.AppItem
+import com.example.screentime.items.CategoryItem
 import com.example.screentime.utils.dayMonthFormat
 import com.github.mikephil.charting.charts.PieChart
 import java.time.LocalDate
 import java.util.*
 
-private const val TAG = "<DEBUG> com.example.screentime.ScreenTimeOverview"
+private const val TAG = "<DEBUG> com.example.screentime.ScreenTimeOverviewActivity"
 class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
 {
     private val appAdapter = RecyclerAdapterAppItem(this)
@@ -33,15 +36,10 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
     private lateinit var vfRecyclerViews: ViewFlipper
     private lateinit var rvAppUsageList: RecyclerView
     private lateinit var rvCategoryUsageList: RecyclerView
-    private lateinit var chkIncludeUnused: CheckBox
-    private lateinit var chkIncludePixelLauncher: CheckBox
     private lateinit var btnEditLimits : Button
 
     private var showApps: Boolean = true
     private var showCategories: Boolean = !showApps
-    private var includeUnused: Boolean = false
-    private var includePixelLauncher: Boolean = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +49,13 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         setListeners()
         setAdapter()
 
+        getAllApps()
+        getAllCategories()
+
         showMostUsed()
         pieChartCreator.createPieChart(chartOverviewToday,
                                        ScreenTimeApp.appInstance.totalScreenTime,
                                        this.applicationContext)
-        createCategoriesList()
     }
 
     private fun initMembers()
@@ -66,8 +66,6 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         vfRecyclerViews = findViewById(R.id.vfRecyclerViews)
         rvAppUsageList = findViewById(R.id.rvAppUsageList)
         rvCategoryUsageList = findViewById(R.id.rvCategoryUsageList)
-        chkIncludeUnused = findViewById(R.id.chkIncludeUnused)
-        chkIncludePixelLauncher = findViewById(R.id.chkIncludePixelLauncher)
         btnEditLimits = findViewById(R.id.btnEditLimits)
     }
 
@@ -88,20 +86,6 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
 
     private fun setListeners()
     {
-        chkIncludeUnused.setOnClickListener {
-            if(it is CheckBox){
-                includeUnused = it.isChecked
-                getDailyUsageStats()
-            }
-        }
-
-        chkIncludePixelLauncher.setOnClickListener {
-            if(it is CheckBox){
-                includePixelLauncher = it.isChecked
-                getDailyUsageStats()
-            }
-        }
-
         btnTogglMostUsed.setOnClickListener {
             showCategories = !showCategories
             showApps = !showApps
@@ -114,9 +98,27 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         }
     }
 
-    override fun onTimeItemClicked(item: TimeItem)
+    override fun onTimeItemClicked(item: Item)
     {
         startNewIntent("","", AppDetailsActivity::class.java)
+    }
+
+    private fun getAllApps()
+    {
+        val usageStatsList: List<UsageStats> = getDailyUsageStats()
+
+        for (useStat in usageStatsList)
+        {
+            ScreenTimeApp.appInstance.appList.addIfNotContained(AppItem(useStat, this.applicationContext))
+        }
+    }
+
+    private fun getAllCategories()
+    {
+        for(category in AppCategory.values())
+        {
+            ScreenTimeApp.appInstance.categoryList.addIfNotContained(CategoryItem(category.categoryId, this.applicationContext ))
+        }
     }
 
     private fun showMostUsed()
@@ -130,50 +132,49 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
             btnTogglMostUsed.text = getString(R.string.toggle_Apps)
             vfRecyclerViews.displayedChild = 1
         }
-        getDailyUsageStats()
+
+        updateUsageStats()
+
+        appAdapter.update()
+        categoryAdapter.update()
+
+        updateOverviewToday()
     }
 
-    private fun getDailyUsageStats()
+    private fun updateUsageStats()
     {
-        val calendar: Calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_MONTH, -1)
+        val usageStatsList: List<UsageStats> = getDailyUsageStats()
 
-        val usageStatsList: List<UsageStats> = getUsageStats(UsageStatsManager.INTERVAL_DAILY, calendar)
-
-        for (i in usageStatsList.indices)
+        for(i in usageStatsList.indices)
         {
-            appAdapter.addItem(usageStatsList[i], this.applicationContext, includeUnused, includePixelLauncher)
+            val itemFound = ScreenTimeApp.appInstance.appList.updateUsageStats(usageStatsList[i])
+            if(!itemFound)
+            {
+                ScreenTimeApp.appInstance.appList.addIfNotContained(AppItem(usageStatsList[i], this.applicationContext))
+            }
         }
+        ScreenTimeApp.appInstance.categoryList.updateUsageStats(usageStatsList[0])
+    }
 
-        categoryAdapter.computeCategoryUsage(this.applicationContext, includeUnused, includePixelLauncher)
-
-
+    private fun updateOverviewToday()
+    {
         ScreenTimeApp.appInstance.updateTotalScreenTime()
         tvCurrentDate.text = dayMonthFormat(LocalDate.now())
 
         chartOverviewToday.notifyDataSetChanged()
     }
 
-    private fun getUsageStats(intervalType: Int, calendar: Calendar): List<UsageStats>
-    {
-        val usageStatsManager: UsageStatsManager =
-                getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager
-
-        return usageStatsManager.queryUsageStats(intervalType,
-                                                 calendar.timeInMillis,
-                                                 System.currentTimeMillis()
-        )
-    }
-
-    private fun createCategoriesList()
+    private fun getDailyUsageStats(): List<UsageStats>
     {
         val calendar: Calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_MONTH, -1)
 
-        ScreenTimeApp.appInstance.categoriesList =
-                CategoriesList(getUsageStats(UsageStatsManager.INTERVAL_DAILY, calendar),
-                               this.applicationContext)
+        val usageStatsManager: UsageStatsManager = getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager
 
+        return usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
+                                                 calendar.timeInMillis,
+                                                 System.currentTimeMillis()
+        )
     }
 
     private fun startNewIntent(tag: String, message: String, newActivity: Class<*>?){
@@ -182,8 +183,5 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         }
 
     }
-
-
 }
 
-// https://stonesoupprogramming.com/2017/11/17/kotlin-string-formatting/

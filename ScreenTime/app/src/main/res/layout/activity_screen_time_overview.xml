@@ -97,7 +97,7 @@
                     android:layout_height="300dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btnTglMostUsed">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -121,30 +121,6 @@
                         tools:listitem="@layout/card_item_screentime" />
 
                 </ViewFlipper>
-
-                <CheckBox
-                    android:id="@+id/chkIncludeUnused"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/chk_incl_unused_app_check"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/chkIncludePixelLauncher"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vfRecyclerViews" />
-
-                <CheckBox
-                    android:id="@+id/chkIncludePixelLauncher"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/chk_incl_pixel_launcher"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/chkIncludeUnused"
-                    app:layout_constraintTop_toBottomOf="@+id/vfRecyclerViews" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

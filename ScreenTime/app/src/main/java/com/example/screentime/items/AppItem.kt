@@ -1,22 +1,34 @@
-package com.example.screentime.timeitems
+package com.example.screentime.items
 
 import android.app.usage.UsageStats
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.screentime.R
-import com.example.screentime.ScreenTimeApp
+import com.example.screentime.categories.AppCategory
 
-data class AppTimeItem (var usageStats: UsageStats, var context: Context) : TimeItem
+private const val TAG = "<-!-DEBUG-!-> com.example.screentime.items.appitem"
+class AppItem (private var usageStats: UsageStats, var context: Context) : Item
 {
     private val appInfo = appInfoAvailable(usageStats)
 
-    override var name = appName()
-    override var icon = appIcon()
-    var category = appCategory()
-    override val useTime = usageStats.totalTimeInForeground
+    override val itemName: String
+        get() = appName()
+
+    override val packageName: String
+        get() = appInfo?.packageName ?: "none"
+
+    override val categoryId: Int = appCategory()
+    override val category: AppCategory
+        get() = AppCategory.values()[categoryId + 1]
+
+    override val icon = appIcon()
+    override var useTime = usageStats.totalTimeInForeground
+    override var limit: Int = -1
+
 
     private fun appName(): String
     {
@@ -24,6 +36,7 @@ data class AppTimeItem (var usageStats: UsageStats, var context: Context) : Time
         {
             return context.packageManager.getApplicationLabel(appInfo).toString()
         }
+
         return usageStats.packageName.split(".").last()
     }
 
@@ -48,10 +61,17 @@ data class AppTimeItem (var usageStats: UsageStats, var context: Context) : Time
         return try
         {
             context.packageManager.getApplicationInfo(usageStats.packageName,0)
-        }catch (e: PackageManager.NameNotFoundException)
+        }
+        catch (e: PackageManager.NameNotFoundException)
         {
             null
         }
+    }
+
+    override fun updateUseTime(time: Long): Long
+    {
+        useTime = time
+        return useTime
     }
 
 }

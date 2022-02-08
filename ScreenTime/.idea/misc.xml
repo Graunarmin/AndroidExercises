@@ -9,11 +9,12 @@
         <entry key="app/src/main/res/layout/activity_limit.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3921875" />
         <entry key="app/src/main/res/layout/activity_screen_time_diagrams.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_screen_time_overview.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_screen_time_overview.xml" value="0.33" />
         <entry key="app/src/main/res/layout/card_diagram.xml" value="0.1" />
         <entry key="app/src/main/res/layout/card_item_limit.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/card_item_screentime.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/diagram_card.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/dialog_limit_picker.xml" value="0.1" />
         <entry key="app/src/main/res/layout/example_item.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/expandable_list_categories.xml" value="0.33" />
         <entry key="app/src/main/res/layout/limit_item.xml" value="0.37604166666666666" />
