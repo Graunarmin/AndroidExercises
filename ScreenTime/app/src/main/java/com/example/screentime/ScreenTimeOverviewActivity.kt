@@ -15,6 +15,7 @@ import com.example.screentime.items.Item
 import com.example.screentime.adapter.OnTimeItemClickListener
 import com.example.screentime.adapter.RecyclerAdapterAppItem
 import com.example.screentime.adapter.RecyclerAdapterCategoryItem
+import com.example.screentime.adapter.RecyclerAdapterLimit
 import com.example.screentime.categories.AppCategory
 import com.example.screentime.items.AppItem
 import com.example.screentime.items.CategoryItem
@@ -28,6 +29,7 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
 {
     private val appAdapter = RecyclerAdapterAppItem(this)
     private val categoryAdapter = RecyclerAdapterCategoryItem(this)
+    private val limitAdapter = RecyclerAdapterLimit()
     private val pieChartCreator : PieChartCreator = PieChartCreator()
 
     private lateinit var tvCurrentDate: TextView
@@ -36,6 +38,7 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
     private lateinit var vfRecyclerViews: ViewFlipper
     private lateinit var rvAppUsageList: RecyclerView
     private lateinit var rvCategoryUsageList: RecyclerView
+    private lateinit var rvLimitsOverview: RecyclerView
     private lateinit var btnEditLimits : Button
 
     private var showApps: Boolean = true
@@ -51,6 +54,12 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
 
         getAllApps()
         getAllCategories()
+    }
+
+    override fun onResume()
+    {
+        super.onResume()
+        limitAdapter.update()
 
         showMostUsed()
         pieChartCreator.createPieChart(chartOverviewToday,
@@ -66,6 +75,7 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         vfRecyclerViews = findViewById(R.id.vfRecyclerViews)
         rvAppUsageList = findViewById(R.id.rvAppUsageList)
         rvCategoryUsageList = findViewById(R.id.rvCategoryUsageList)
+        rvLimitsOverview = findViewById(R.id.rvLimitsOverview)
         btnEditLimits = findViewById(R.id.btnEditLimits)
     }
 
@@ -82,6 +92,12 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         rvCategoryUsageList.itemAnimator = DefaultItemAnimator()
         rvCategoryUsageList.adapter = categoryAdapter
         rvCategoryUsageList.setHasFixedSize(true)
+
+        val layoutManagerLimit = LinearLayoutManager(this)
+        rvLimitsOverview.layoutManager = layoutManagerLimit
+        rvLimitsOverview.itemAnimator = null
+        rvLimitsOverview.adapter = limitAdapter
+        rvLimitsOverview.setHasFixedSize(true)
     }
 
     private fun setListeners()

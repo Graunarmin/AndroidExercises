@@ -69,6 +69,5 @@ class LimitActivity : AppCompatActivity(), DialogLimitPicker.DialogLimitPickerLi
     {
         val appItem = ScreenTimeApp.appInstance.appList.getItemByName(setLimitFor)
         appItem?.limit = limit
-        Log.d(TAG, "Limit for $setLimitFor set to $limit")
     }
 }

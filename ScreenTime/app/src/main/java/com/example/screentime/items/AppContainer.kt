@@ -21,4 +21,12 @@ class AppContainer : ItemContainer()
     {
         return ArrayList(itemList.filter { app -> app.wasUsed }.sortedBy { it.useTime }.reversed()) as ArrayList<AppItem>
     }
+
+    fun getAppsWithLimit() : ArrayList<AppItem>
+    {
+        val list = ArrayList(itemList.filter { app -> app.limit > 0 }.sortedBy { it.itemName }.reversed()) as ArrayList<AppItem>
+
+        Log.d(TAG, "There are ${list.size} limits")
+        return list
+    }
 }

@@ -22,7 +22,7 @@ class RecyclerAdapterAppItem (itemClickListener: OnTimeItemClickListener) : Recy
         itemList = ScreenTimeApp.appInstance.appList.getUsedApps() as ArrayList<Item>
 
         size = itemList.size
-        this.notifyItemRangeInserted(0, size-1)
+        this.notifyItemRangeInserted(0, size)
     }
 
 }

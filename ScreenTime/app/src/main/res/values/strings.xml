@@ -20,6 +20,7 @@
     <string name="btn_more">More</string>
 
     <string name="limits_overview">Limits</string>
+    <string name="limited_to_info">Limited to %1$s Minutes</string>
     <string name="btn_edit_limits">Edit Limits</string>
     <string name="edit_limit">Edit</string>
 

@@ -151,17 +151,26 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"/>
 
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvLimitsOverview"
+                <ViewFlipper
+                    android:id="@+id/vfRecyclerViewLimits"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:clipToPadding="false"
+                    android:layout_height="300dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvLimitsOverviewHeadline"
-                    tools:listitem="@layout/card_item_limit" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvLimitsOverviewHeadline"
+                    app:layout_constraintBottom_toTopOf="@+id/btnEditLimits">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvLimitsOverview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:clipToPadding="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:listitem="@layout/card_item_limit" />
+
+                </ViewFlipper>
 
                 <Button
                     android:id="@+id/btnEditLimits"
@@ -169,7 +178,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rvLimitsOverview"
+                    app:layout_constraintTop_toBottomOf="@+id/vfRecyclerViewLimits"
                     android:text="@string/btn_edit_limits"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
