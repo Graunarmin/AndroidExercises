@@ -12,8 +12,7 @@ interface Item
     val icon: Drawable?
     var useTime: Long
     var readableUseTime: String
-    val wasUsed: Boolean
-        get() = (useTime != 0L)
+    var wasUsed: Boolean
 
     val categoryId: Int
 

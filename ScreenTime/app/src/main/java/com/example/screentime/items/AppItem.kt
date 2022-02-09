@@ -28,15 +28,10 @@ class AppItem (private var usageStats: UsageStats, var context: Context) : Item
         get() = AppCategory.values()[categoryId + 1]
 
     override val icon = appIcon()
+    override var wasUsed: Boolean = false
     override var useTime = usageStats.totalTimeInForeground
     override var readableUseTime: String = formatUsageTime(useTime)
     override var limit: Int = -1
-
-    init
-    {
-        Log.d(TAG, "$itemName total Screentime: $useTime")
-    }
-
 
     private fun appName(): String
     {
@@ -79,11 +74,11 @@ class AppItem (private var usageStats: UsageStats, var context: Context) : Item
     override fun updateUseTime(time: Long): Long
     {
         useTime = time
-        Log.d(TAG, "updated Screentime of $itemName to $useTime")
         readableUseTime = formatUsageTime(useTime)
+        wasUsed = useTime > 0
+
         return useTime
     }
-
 }
 
 // ApplicationInfo: https://developer.android.com/reference/kotlin/android/content/pm/ApplicationInfo

@@ -34,7 +34,6 @@ class RecyclerAdapterLimit : RecyclerView.Adapter<RecyclerAdapterLimit.LimitView
         val currentItem = itemList[position]
         holder.tvLimitAppName.text = currentItem.itemName
         holder.tvLimitedTo.text = "Limit set to ${currentItem.limit} minutes"
-        Log.d(TAG, "Limit for ${currentItem.itemName}")
     }
 
     override fun getItemCount(): Int

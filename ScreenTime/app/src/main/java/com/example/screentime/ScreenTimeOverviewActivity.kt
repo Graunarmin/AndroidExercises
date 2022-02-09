@@ -1,12 +1,16 @@
 package com.example.screentime
 
+import android.app.Notification
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +48,7 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
 
     private var showApps: Boolean = true
     private var showCategories: Boolean = !showApps
+    private lateinit var notificationManager: NotificationManagerCompat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +83,8 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         rvCategoryUsageList = findViewById(R.id.rvCategoryUsageList)
         rvLimitsOverview = findViewById(R.id.rvLimitsOverview)
         btnEditLimits = findViewById(R.id.btnEditLimits)
+
+        notificationManager = NotificationManagerCompat.from(this)
     }
 
     private fun setAdapter()
@@ -115,11 +122,17 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         }
     }
 
+    /**
+     * Implementation of OnTimeItemClickListener Interface to register Clicks on an entry in the Recycler View for Most Used
+     */
     override fun onTimeItemClicked(item: Item)
     {
         startNewIntent(EXTRA_APP_NAME_FOR_DETAILS, item.itemName, AppDetailsActivity::class.java)
     }
 
+    /**
+     * Creates a List of all apps that offer usageStats
+     */
     private fun getAllApps()
     {
         val usageStatsList: List<UsageStats> = getDailyUsageStats()
@@ -130,11 +143,25 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         }
     }
 
+    /**
+     * Creates a List of all App-Categories
+     */
     private fun getAllCategories()
     {
         for(category in AppCategory.values())
         {
             ScreenTimeApp.appInstance.categoryList.addIfNotContained(CategoryItem(category.categoryId, this.applicationContext ))
+        }
+    }
+
+    private fun checkLimits()
+    {
+        for(app in ScreenTimeApp.appInstance.appList.getAppsWithLimit())
+        {
+            if(app.useTime >= app.limit)
+            {
+
+            }
         }
     }
 
@@ -190,12 +217,25 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         )
     }
 
+    public fun sendLimitNotification(view: View)
+    {
+        //ToDo: change Title & Message
+        val notification: Notification = NotificationCompat.Builder(this, channelID)
+            .setSmallIcon(R.drawable.ic_android)
+            .setContentTitle("Limit reached!")
+            .setContentText("You have reached the Limit of X for Y")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_SYSTEM)
+            .build()
+
+        notificationManager.notify(1, notification)
+    }
+
     private fun startNewIntent(tag: String, message: String, newActivity: Class<*>?){
         Intent(this, newActivity).also {
             it.putExtra(tag, message)
             startActivity(it)
         }
-
     }
 }
 

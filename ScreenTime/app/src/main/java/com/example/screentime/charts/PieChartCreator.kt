@@ -2,6 +2,7 @@ package com.example.screentime.charts
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.screentime.ScreenTimeApp
 import com.example.screentime.items.Item
@@ -28,7 +29,7 @@ class PieChartCreator()
 
         val entries : ArrayList<PieEntry> = getData(context)
 
-        val data : PieData = PieData(createDataSet(entries, colors, "Screen Time Today"))
+        val data : PieData = PieData(createDataSet(entries, colors))
 
         pieChart.rotationAngle = 45f
 
@@ -79,7 +80,7 @@ class PieChartCreator()
         for (categoryItem : Item in ScreenTimeApp.appInstance.categoryList.getUsedCategories())
         {
             val entry = PieEntry(longMillisToFloatMinutes(categoryItem.useTime), categoryItem.itemName)
-            //exclude entries that are too small
+            //exclude entries that are too smalls
             if (entry.value < 2f)
             {
                 break
@@ -91,7 +92,7 @@ class PieChartCreator()
     }
 
 
-    private fun createDataSet(data: ArrayList<PieEntry>, colors: ArrayList<Int>, label: String) : PieDataSet
+    private fun createDataSet(data: ArrayList<PieEntry>, colors: ArrayList<Int>) : PieDataSet
     {
         val dataSet: PieDataSet = PieDataSet(data, "")
         dataSet.colors = colors

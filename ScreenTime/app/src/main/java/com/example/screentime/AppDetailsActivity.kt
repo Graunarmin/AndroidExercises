@@ -22,8 +22,8 @@ class AppDetailsActivity : AppCompatActivity(), DialogLimitPicker.DialogLimitPic
     private lateinit var tvAppName: TextView
     private lateinit var tvUseTimeToday: TextView
 
-    private lateinit var tvDailyAverage: TextView
-    private lateinit var barChart: BarChart
+    //private lateinit var tvDailyAverage: TextView
+    //private lateinit var barChart: BarChart
 
     private lateinit var tvLimitInfo: TextView
     private lateinit var btnAppDetailEditLimit: Button
@@ -54,8 +54,8 @@ class AppDetailsActivity : AppCompatActivity(), DialogLimitPicker.DialogLimitPic
         tvAppCategory = findViewById(R.id.tvAppCategory)
         tvAppName = findViewById(R.id.tvAppName)
         tvUseTimeToday = findViewById(R.id.tvUseTimeToday)
-        tvDailyAverage = findViewById(R.id.tvDailyAverage)
-        barChart = findViewById(R.id.barChart)
+        //tvDailyAverage = findViewById(R.id.tvDailyAverage)
+        //barChart = findViewById(R.id.barChart)
         tvLimitInfo = findViewById(R.id.tvLimitInfo)
         btnAppDetailEditLimit = findViewById(R.id.btnAppDetailEditLimit)
         btnNotifyLimitReached = findViewById(R.id.btnNotifyLimitReached)

@@ -39,7 +39,7 @@ class ScreenTimeApp : Application()
         createNotificationChannels()
     }
 
-    fun createNotificationChannels()
+    private fun createNotificationChannels()
     {
         val limitsChannel: NotificationChannel = NotificationChannel(
                 channelID,

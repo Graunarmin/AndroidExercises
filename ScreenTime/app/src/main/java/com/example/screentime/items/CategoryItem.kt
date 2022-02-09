@@ -21,20 +21,21 @@ class CategoryItem(categoryIndex: Int, var context: Context) : Item
     override var limit: Int = -1
 
     val containedApps: ArrayList<AppItem> = getCategoryApps()
+    override var wasUsed: Boolean = false
     override var useTime : Long = updateUseTime(0)
     override var readableUseTime: String = formatUsageTime(useTime)
+
 
     override fun updateUseTime(time: Long) : Long
     {
         var utime : Long = 0
         if(containedApps != null)
         {
-            containedApps.forEach { app -> utime += app.useTime
-            Log.d(TAG, "Usetime for ${app.itemName} in category $itemName is ${app.useTime}")}
+            containedApps.forEach { app -> utime += app.useTime }
         }
-
-        Log.d(TAG, "Total Use Time for $itemName is $utime")
+        useTime = utime
         readableUseTime = formatUsageTime(useTime)
+        wasUsed = useTime > 0
         return utime
     }
 

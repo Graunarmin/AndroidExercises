@@ -14,8 +14,9 @@ class CategoryContainer : ItemContainer()
         return true
     }
 
-    fun getUsedCategories() : ArrayList<CategoryItem>
+    fun getUsedCategories(): ArrayList<CategoryItem>
     {
-        return ArrayList(itemList.filter { category -> category.wasUsed }.sortedBy { it.useTime }.reversed()) as ArrayList<CategoryItem>
+        return ArrayList(itemList.filter { category -> category.wasUsed }.sortedBy { it.useTime }
+                             .reversed()) as ArrayList<CategoryItem>
     }
 }
