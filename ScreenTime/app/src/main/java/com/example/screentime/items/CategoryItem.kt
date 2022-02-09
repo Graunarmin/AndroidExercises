@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.screentime.ScreenTimeApp
 import com.example.screentime.categories.AppCategory
+import com.example.screentime.utils.formatUsageTime
 
 private const val TAG = "<-!-DEBUG-!-> com.example.screentime.items.categoryitem"
 class CategoryItem(categoryIndex: Int, var context: Context) : Item
@@ -21,15 +22,19 @@ class CategoryItem(categoryIndex: Int, var context: Context) : Item
 
     val containedApps: ArrayList<AppItem> = getCategoryApps()
     override var useTime : Long = updateUseTime(0)
+    override var readableUseTime: String = formatUsageTime(useTime)
 
     override fun updateUseTime(time: Long) : Long
     {
         var utime : Long = 0
         if(containedApps != null)
         {
-            containedApps.forEach { app -> utime += app.useTime }
+            containedApps.forEach { app -> utime += app.useTime
+            Log.d(TAG, "Usetime for ${app.itemName} in category $itemName is ${app.useTime}")}
         }
 
+        Log.d(TAG, "Total Use Time for $itemName is $utime")
+        readableUseTime = formatUsageTime(useTime)
         return utime
     }
 

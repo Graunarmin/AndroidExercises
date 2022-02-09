@@ -25,6 +25,7 @@ import java.time.LocalDate
 import java.util.*
 
 private const val TAG = "<DEBUG> com.example.screentime.ScreenTimeOverviewActivity"
+const val EXTRA_APP_NAME_FOR_DETAILS = "EXTRA_APP_NAME_FOR_DETAILS"
 class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
 {
     private val appAdapter = RecyclerAdapterAppItem(this)
@@ -116,7 +117,7 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
 
     override fun onTimeItemClicked(item: Item)
     {
-        startNewIntent("","", AppDetailsActivity::class.java)
+        startNewIntent(EXTRA_APP_NAME_FOR_DETAILS, item.itemName, AppDetailsActivity::class.java)
     }
 
     private fun getAllApps()
@@ -164,10 +165,6 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         for(i in usageStatsList.indices)
         {
             val itemFound = ScreenTimeApp.appInstance.appList.updateUsageStats(usageStatsList[i])
-            if(!itemFound)
-            {
-                ScreenTimeApp.appInstance.appList.addIfNotContained(AppItem(usageStatsList[i], this.applicationContext))
-            }
         }
         ScreenTimeApp.appInstance.categoryList.updateUsageStats(usageStatsList[0])
     }
@@ -195,6 +192,7 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
 
     private fun startNewIntent(tag: String, message: String, newActivity: Class<*>?){
         Intent(this, newActivity).also {
+            it.putExtra(tag, message)
             startActivity(it)
         }
 

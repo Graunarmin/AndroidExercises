@@ -1,9 +1,11 @@
 package com.example.screentime.utils
 
+import android.nfc.Tag
 import android.util.Log
 import java.time.LocalDate
 import java.util.concurrent.TimeUnit
 
+private const val TAG = "<DEBUG> com.example.screentime.utils.DateTimeUtils"
 // https://www.baeldung.com/kotlin/dates
 
 data class ReadableTime(var millisTime: Long)
@@ -13,7 +15,9 @@ data class ReadableTime(var millisTime: Long)
     val seconds : Long = TimeUnit.MILLISECONDS.toSeconds(millisTime) % TimeUnit.MINUTES.toSeconds(1)
 }
 
-
+/**
+ * Formats Date as "Today, Weekday #th
+ */
 fun dayMonthFormat(date: LocalDate) : String
 {
     return "Today, " +
@@ -23,6 +27,9 @@ fun dayMonthFormat(date: LocalDate) : String
            "${date.dayOfMonth}th "
 }
 
+/**
+ * Formats Time as #h ##min bzw. ##min bzw. <1min
+ */
 fun formatUsageTime(millisTime: Long): String
 {
     val time = ReadableTime(millisTime)
@@ -31,30 +38,8 @@ fun formatUsageTime(millisTime: Long): String
     {
         if(time.minutes == 0L)
         {
-            return "< 1 min"
+            return "< 1min"
         }
-        return String.format("%dmin", time.minutes)
-    }
-    return String.format("%d:%02dh", time.hours, time.minutes)
-}
-
-fun beautifulTime(millisTime: Long) : String
-{
-    val time = ReadableTime(millisTime)
-
-    if(time.hours == 0L)
-    {
-        return String.format("%d min %02d sec", time.minutes, time.seconds)
-    }
-    return String.format("%d h %02d min %02 sec", time.hours, time.minutes, time.seconds)
-}
-
-fun withoutSeconds(millisTime: Long) : String
-{
-    val time = ReadableTime(millisTime)
-
-    if(time.hours == 0L)
-    {
         return String.format("%dmin", time.minutes)
     }
     return String.format("%dh %02dmin", time.hours, time.minutes)

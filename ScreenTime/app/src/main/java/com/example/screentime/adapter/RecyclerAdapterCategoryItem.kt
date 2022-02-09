@@ -17,7 +17,7 @@ class RecyclerAdapterCategoryItem(itemClickListener: OnTimeItemClickListener) : 
     {
         var size = itemList.size
         itemList.clear()
-        this.notifyItemRangeRemoved(0, size-1)
+        this.notifyItemRangeRemoved(0, size)
 
         itemList = ScreenTimeApp.appInstance.categoryList.getUsedCategories() as ArrayList<Item>
 

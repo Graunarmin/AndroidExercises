@@ -12,7 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvOverviewToday"
@@ -32,23 +35,25 @@
                     android:layout_height="wrap_content"
                     android:text="@string/date_headline"
                     android:textColor="#757575"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"/>
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/chartOverviewToday"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvCurrentDate">
+                    app:layout_constraintTop_toBottomOf="@+id/tvCurrentDate"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                 </com.github.mikephil.charting.charts.PieChart>
 
@@ -74,7 +79,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/most_used_overview"
-                    android:textColor="#A1887F"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -89,12 +93,14 @@
                     android:text="@string/toggle_Categories"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"/>
 
                 <ViewFlipper
                     android:id="@+id/vfRecyclerViews"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="250dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -108,7 +114,9 @@
                         android:clipToPadding="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        tools:listitem="@layout/card_item_screentime" />
+                        tools:listitem="@layout/card_item_screentime"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvCategoryUsageList"
@@ -118,7 +126,9 @@
                         android:clipToPadding="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        tools:listitem="@layout/card_item_screentime" />
+                        tools:listitem="@layout/card_item_screentime"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"/>
 
                 </ViewFlipper>
 
@@ -145,32 +155,26 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:text="@string/limits_overview"
-                    android:textColor="#A1887F"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"/>
 
-                <ViewFlipper
-                    android:id="@+id/vfRecyclerViewLimits"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvLimitsOverview"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:clipToPadding="false"
+                    tools:listitem="@layout/card_item_limit"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvLimitsOverviewHeadline"
-                    app:layout_constraintBottom_toTopOf="@+id/btnEditLimits">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvLimitsOverview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:clipToPadding="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:listitem="@layout/card_item_limit" />
-
-                </ViewFlipper>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvLimitsOverviewHeadline"
+                    app:layout_constraintBottom_toTopOf="@+id/btnEditLimits"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
 
                 <Button
                     android:id="@+id/btnEditLimits"
@@ -178,12 +182,11 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vfRecyclerViewLimits"
+                    app:layout_constraintTop_toBottomOf="@+id/rvLimitsOverview"
                     android:text="@string/btn_edit_limits"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
     </LinearLayout>
 </ScrollView>

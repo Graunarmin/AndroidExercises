@@ -11,8 +11,7 @@ interface Item
     val packageName: String
     val icon: Drawable?
     var useTime: Long
-    val readableUseTime: String
-        get() = formatUsageTime(useTime)
+    var readableUseTime: String
     val wasUsed: Boolean
         get() = (useTime != 0L)
 

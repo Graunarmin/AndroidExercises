@@ -99,7 +99,10 @@ open class ItemContainer
         }
         if(!containsItemWithName(item.itemName))
         {
+            Log.d(TAG, "Adding ${item.itemName} to container")
             add(item)
+        }else{
+            Log.d(TAG, "${item.itemName} already in container")
         }
     }
 

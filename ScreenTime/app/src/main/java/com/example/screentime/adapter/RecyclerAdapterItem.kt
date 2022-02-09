@@ -22,7 +22,7 @@ open class RecyclerAdapterItem(var itemClickListener: OnTimeItemClickListener) :
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
         val ivIcon: ImageView = itemView.findViewById(R.id.ivIcon)
-        val tvName: TextView = itemView.findViewById(R.id.tvName)
+        val tvName: TextView = itemView.findViewById(R.id.tvItemName)
         val tvUsageTime: TextView = itemView.findViewById(R.id.tvUsageTime)
 
         fun bind(item: Item, clickListener: OnTimeItemClickListener)

@@ -15,14 +15,12 @@ class RecyclerAdapterAppItem (itemClickListener: OnTimeItemClickListener) : Recy
 
     fun update()
     {
-        var size = itemList.size
         itemList.clear()
-        this.notifyItemRangeRemoved(0, size-1)
+        this.notifyDataSetChanged()
 
         itemList = ScreenTimeApp.appInstance.appList.getUsedApps() as ArrayList<Item>
 
-        size = itemList.size
-        this.notifyItemRangeInserted(0, size)
+        this.notifyDataSetChanged()
     }
 
 }

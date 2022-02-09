@@ -28,6 +28,7 @@
     <string name="app_details_limits_Label">Limit</string>
     <string name="no_limit">No Limit</string>
     <string name="btn_add_limit">Edit</string>
+    <string name="btn_limit_reached">Notify</string>
 
     <!-- App Limits -->
     <string name="limits_headline"> Limits</string>

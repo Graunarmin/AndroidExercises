@@ -39,7 +39,7 @@ class PieChartCreator()
     {
         // Donut
         pieChart.isDrawHoleEnabled = true
-        pieChart.holeRadius = (pieChart.holeRadius) * 0.8f
+        pieChart.holeRadius = (pieChart.holeRadius) * 1f
 
         // Text in the Center
         pieChart.centerText = centerText
@@ -63,6 +63,8 @@ class PieChartCreator()
         legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
         legend.orientation = Legend.LegendOrientation.HORIZONTAL
         //legend.xOffset = 10f;  //Offset of legend x
+
+        legend.textSize = 12f
 
         legend.form = Legend.LegendForm.CIRCLE
         legend.setDrawInside(false)
