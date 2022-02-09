@@ -67,10 +67,12 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         super.onResume()
         limitAdapter.update()
 
+
         showMostUsed()
         pieChartCreator.createPieChart(chartOverviewToday,
                                        ScreenTimeApp.appInstance.totalScreenTime,
                                        this.applicationContext)
+        checkLimits()
     }
 
     private fun initMembers()
@@ -160,7 +162,7 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         {
             if(app.useTime >= app.limit)
             {
-
+                sendLimitNotification(app as Item)
             }
         }
     }
@@ -217,13 +219,12 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         )
     }
 
-    public fun sendLimitNotification(view: View)
+    private fun sendLimitNotification(item: Item)
     {
-        //ToDo: change Title & Message
         val notification: Notification = NotificationCompat.Builder(this, channelID)
             .setSmallIcon(R.drawable.ic_android)
             .setContentTitle("Limit reached!")
-            .setContentText("You have reached the Limit of X for Y")
+            .setContentText("You have reached the Limit of ${item.limit} Minutes for ${item.itemName}")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_SYSTEM)
             .build()

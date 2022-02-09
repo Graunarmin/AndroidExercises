@@ -26,5 +26,4 @@ interface Item
     }
 
     fun updateUseTime(time: Long) : Long
-
 }

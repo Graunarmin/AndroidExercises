@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.screentime.dialogs.DialogLimitPicker
 import com.example.screentime.items.AppItem
+import com.example.screentime.items.Item
 import com.example.screentime.utils.floatMinutesToTime
 import com.github.mikephil.charting.charts.BarChart
 
@@ -27,11 +28,8 @@ class AppDetailsActivity : AppCompatActivity(), DialogLimitPicker.DialogLimitPic
 
     private lateinit var tvLimitInfo: TextView
     private lateinit var btnAppDetailEditLimit: Button
-    private lateinit var btnNotifyLimitReached: Button
 
     private lateinit var appItem: AppItem
-
-    private lateinit var notificationManager: NotificationManagerCompat
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -44,8 +42,6 @@ class AppDetailsActivity : AppCompatActivity(), DialogLimitPicker.DialogLimitPic
         initMembers()
         setListeners()
         setDetails()
-
-        notificationManager = NotificationManagerCompat.from(this)
     }
 
     private fun initMembers()
@@ -58,17 +54,12 @@ class AppDetailsActivity : AppCompatActivity(), DialogLimitPicker.DialogLimitPic
         //barChart = findViewById(R.id.barChart)
         tvLimitInfo = findViewById(R.id.tvLimitInfo)
         btnAppDetailEditLimit = findViewById(R.id.btnAppDetailEditLimit)
-        btnNotifyLimitReached = findViewById(R.id.btnNotifyLimitReached)
     }
 
     private fun setListeners()
     {
         btnAppDetailEditLimit.setOnClickListener {
             openDialog(appItem.itemName)
-
-        }
-        btnNotifyLimitReached.setOnClickListener {
-            sendLimitNotification(it)
         }
     }
 
@@ -101,20 +92,6 @@ class AppDetailsActivity : AppCompatActivity(), DialogLimitPicker.DialogLimitPic
         limitPickerDialog.show(supportFragmentManager, "Set Limit for $appName")
 
         return true
-    }
-
-    public fun sendLimitNotification(view: View)
-    {
-        //ToDo: change Title & Message
-        val notification: Notification = NotificationCompat.Builder(this, channelID)
-            .setSmallIcon(R.drawable.ic_android)
-            .setContentTitle("Limit reached!")
-            .setContentText("You have reached the Limit of X for Y")
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setCategory(NotificationCompat.CATEGORY_SYSTEM)
-            .build()
-
-        notificationManager.notify(1, notification)
     }
 
     override fun applyLimit(limit: Int)
