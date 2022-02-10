@@ -12,7 +12,11 @@ import android.content.Intent
 import android.os.Process.myUid
 import android.provider.Settings
 
- private const val TAG = "<DEBUG>  com.example.screentime.MainActivity"
+ /**
+  * Checks whether the needed Permissions are set and if not, prompts the user to the System Settings
+  */
+
+ private const val TAG = "com.example.screentime.MainActivity"
  class MainActivity : AppCompatActivity()
  {
     private lateinit var btnPermission : Button

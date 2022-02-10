@@ -5,6 +5,9 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.text.DecimalFormat
 
+/**
+ * Formatter for the PieChartCreator
+ */
 class TimeFormatter() : ValueFormatter()
 {
 

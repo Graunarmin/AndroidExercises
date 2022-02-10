@@ -4,7 +4,10 @@ import android.graphics.drawable.Drawable
 import com.example.screentime.categories.AppCategory
 import com.example.screentime.utils.formatUsageTime
 
-private const val TAG = "<-!-DEBUG-!-> com.example.screentime.items.item"
+/**
+ * Interface for items that have a use time and a limit.
+ */
+private const val TAG = "com.example.screentime.items.item"
 interface Item
 {
     val itemName: String

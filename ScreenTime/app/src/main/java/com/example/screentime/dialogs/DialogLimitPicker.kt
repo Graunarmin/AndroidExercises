@@ -12,7 +12,10 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.screentime.R
 import java.lang.ClassCastException
 
-private const val TAG = "<-!-DEBUG-!-> com.example.screentime.dialogs.dialoglimitpicker"
+/**
+ * Handles the Android Dialog for picking a limit with a NumberPicker
+ */
+private const val TAG = "com.example.screentime.dialogs.dialoglimitpicker"
 class DialogLimitPicker() : AppCompatDialogFragment()
 {
     private lateinit var numberpickerAppLimit: NumberPicker
@@ -49,6 +52,7 @@ class DialogLimitPicker() : AppCompatDialogFragment()
             numberpickerAppLimit = view.findViewById(R.id.numberpickerAppLimit)
             numberpickerAppLimit.minValue = 0
             numberpickerAppLimit.maxValue = 1439
+
             if(bundle != null)
             {
                 val limit = bundle.getInt("Limit")
@@ -79,7 +83,6 @@ class DialogLimitPicker() : AppCompatDialogFragment()
         {
             throw ClassCastException("${context.toString()} DialogLimitPickerListener has to be implemented")
         }
-
     }
 
     interface DialogLimitPickerListener

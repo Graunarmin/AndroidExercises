@@ -1,6 +1,5 @@
 package com.example.screentime.adapter
 
-import android.content.res.Resources
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,11 @@ import com.example.screentime.R
 import com.example.screentime.ScreenTimeApp
 import com.example.screentime.items.AppItem
 
-private const val TAG = "<-!-DEBUG-!-> com.example.screentime.adapter.recycleradapterlimit"
+/**
+ * Recycler Adapter for the RecyclerView of set Limits in the ScreenTimeOverviewActivity
+ */
+
+private const val TAG = "com.example.screentime.adapter.recycleradapterlimit"
 class RecyclerAdapterLimit : RecyclerView.Adapter<RecyclerAdapterLimit.LimitViewHolder>()
 {
     private var itemList : ArrayList<AppItem> = ArrayList()
@@ -24,7 +27,6 @@ class RecyclerAdapterLimit : RecyclerView.Adapter<RecyclerAdapterLimit.LimitView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LimitViewHolder
     {
-        Log.d(TAG, "Creating View Holder")
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.card_item_limit, parent, false)
         return LimitViewHolder(itemView)
     }
@@ -48,9 +50,6 @@ class RecyclerAdapterLimit : RecyclerView.Adapter<RecyclerAdapterLimit.LimitView
         this.notifyDataSetChanged()
 
         itemList = ScreenTimeApp.appInstance.appList.getAppsWithLimit()
-        val size = itemList.size
-        Log.d(TAG, "Updating Recycler Limits: List holds now $size item(s)")
-
         this.notifyDataSetChanged()
     }
 }

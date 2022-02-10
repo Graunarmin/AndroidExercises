@@ -12,7 +12,16 @@ import com.example.screentime.R
 import com.example.screentime.categories.AppCategory
 import com.example.screentime.utils.formatUsageTime
 
-private const val TAG = "<-!-DEBUG-!-> com.example.screentime.items.appitem"
+// ApplicationInfo: https://developer.android.com/reference/kotlin/android/content/pm/ApplicationInfo
+// Categories : https://developer.android.com/reference/kotlin/android/content/pm/ApplicationInfo#category:kotlin.Int
+
+/**
+ * An Instance of [AppItem] represents one of the apps from the usage statistics.
+ *
+ * For each package found by the UsageStatsManager, one [AppItem] is instantiated
+ */
+
+private const val TAG = "com.example.screentime.items.appitem"
 class AppItem (private var usageStats: UsageStats, var context: Context) : Item
 {
     private val appInfo = appInfoAvailable(usageStats)
@@ -80,6 +89,3 @@ class AppItem (private var usageStats: UsageStats, var context: Context) : Item
         return useTime
     }
 }
-
-// ApplicationInfo: https://developer.android.com/reference/kotlin/android/content/pm/ApplicationInfo
-// Categories : https://developer.android.com/reference/kotlin/android/content/pm/ApplicationInfo#category:kotlin.Int

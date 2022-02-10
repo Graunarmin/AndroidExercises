@@ -5,7 +5,11 @@ import com.example.screentime.items.CategoryItem
 import java.util.*
 import kotlin.collections.ArrayList
 
-private const val TAG = "<-!-DEBUG-!-> com.example.screentime.categories.categoriesmap"
+/**
+ * Holds an EnumMap of all AppCategories mapped to their respective Apps.
+ * Is used by the ExpandableListView to easiliy access the Groups (Categories) and Children (respective Apps)
+ */
+private const val TAG = "com.example.screentime.categories.categoriesmap"
 class CategoriesMap()
 {
     var categoriesMap : EnumMap<AppCategory, ArrayList<String>> = EnumMap(AppCategory::class.java)

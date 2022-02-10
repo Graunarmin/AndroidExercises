@@ -9,11 +9,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.screentime.R
 import com.example.screentime.items.Item
 
-private const val TAG = "<-!-DEBUG-!-> com.example.screentime.adapter.recycleradapteritem"
+private const val TAG = "com.example.screentime.adapter.recycleradapteritem"
 
-interface OnTimeItemClickListener{
+/**
+ * Interface for reacting to a click on an [Item] in one of the RecyclerViews
+ */
+interface OnTimeItemClickListener
+{
     fun onTimeItemClicked(item: Item)
 }
+
+/**
+ * RecyclerAdapter that fills the RecyclerViews for the [Item]s in the ScreenTimeOverviewActivity with data.
+ *
+ * This class provides the basic Functionality and implements the parent Class [RecyclerView.Adapter]
+ * while the inheriting classes [RecyclerAdapterAppItem] and [RecyclerAdapterCategoryItem] update and hold their specific lists of items.
+ */
 
 open class RecyclerAdapterItem(var itemClickListener: OnTimeItemClickListener) : RecyclerView.Adapter<RecyclerAdapterItem.ItemViewHolder>()
 {

@@ -5,7 +5,11 @@ import android.app.usage.UsageStats
 import android.util.Log
 import com.example.screentime.adapter.RecyclerAdapterItem
 
-private const val TAG = "<-!-DEBUG-!-> com.example.screentime.items.itemcontainer"
+/**
+ * Container that holds a List of [Item]s and performs actions on it.
+ */
+
+private const val TAG = "com.example.screentime.items.itemcontainer"
 open class ItemContainer
 {
     open var itemList : ArrayList<Item> = ArrayList()
@@ -99,10 +103,7 @@ open class ItemContainer
         }
         if(!containsItemWithName(item.itemName))
         {
-            Log.d(TAG, "Adding ${item.itemName} to container")
             add(item)
-        }else{
-            Log.d(TAG, "${item.itemName} already in container")
         }
     }
 
@@ -122,23 +123,6 @@ open class ItemContainer
     {
         itemList.clear()
         with(adapter) { notifyDataSetChanged() }
-    }
-
-    fun updateEntryForRecyclerView(item: Item, includeUnused: Boolean, includeLauncher: Boolean, adapter: RecyclerAdapterItem)
-    {
-
-        if(!includeLauncher && item.itemName == "Pixel Launcher")
-        {
-            return
-        }
-        if((!includeUnused) && (!item.wasUsed))
-        {
-            return
-        }
-
-        val index = getNewEntryIndex(item)
-        addIfNotContained(item, index)
-        adapter.notifyItemInserted(index)
     }
 
     open fun updateUsageStats(usageStats: UsageStats) : Boolean

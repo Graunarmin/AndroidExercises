@@ -8,10 +8,18 @@ import com.example.screentime.items.CategoryItem
 import com.example.screentime.items.Item
 import com.example.screentime.items.ItemContainer
 
+/**
+ * Recycler Adapter for [CategoryItem]s
+ */
+
 private const val TAG = "<DEBUG> com.example.screentime.adapter.RecyclerAdapterCategories"
 class RecyclerAdapterCategoryItem(itemClickListener: OnTimeItemClickListener) : RecyclerAdapterItem(itemClickListener)
 {
     override var itemList: ArrayList<Item> = ArrayList()
+
+    /**
+     * Updates the list of [CategoryItem]s that provides the data for the RecyclerView
+     */
 
     fun update()
     {

@@ -15,7 +15,11 @@ import com.example.screentime.items.Item
 import com.example.screentime.utils.floatMinutesToTime
 import com.github.mikephil.charting.charts.BarChart
 
-private const val TAG = "<-!-DEBUG-!-> com.example.screentime.appdetailsactivity"
+/**
+ * Activity that provides all details about one app and a dialog the edit the limit of said app
+ */
+
+private const val TAG = "com.example.screentime.appdetailsactivity"
 class AppDetailsActivity : AppCompatActivity(), DialogLimitPicker.DialogLimitPickerListener
 {
     private lateinit var ivAppIcon: ImageView

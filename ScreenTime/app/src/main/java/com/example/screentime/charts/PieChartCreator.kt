@@ -17,7 +17,11 @@ import com.github.mikephil.charting.data.PieEntry
 // https://www.programmersought.com/article/17146031876/
 // https://www.programmersought.com/article/99524092993/
 
-private const val TAG = "<-!-DEBUG-!-> com.example.screentime.charts.PieChartCreator"
+/**
+ * Creates a PieChart of the use time of the different categories.
+ */
+
+private const val TAG = "com.example.screentime.charts.PieChartCreator"
 class PieChartCreator()
 {
     private var colors: ArrayList<Int> = ArrayList()
@@ -36,6 +40,7 @@ class PieChartCreator()
         pieChart.data = data
         pieChart.invalidate()
     }
+
     private fun setUpPieChart(pieChart: PieChart, centerText: String)
     {
         // Donut

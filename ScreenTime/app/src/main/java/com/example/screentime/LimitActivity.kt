@@ -8,7 +8,12 @@ import com.example.screentime.adapter.ExpandableListAdapterLimitChoices
 import com.example.screentime.categories.CategoriesMap
 import com.example.screentime.dialogs.DialogLimitPicker
 
-private const val TAG = "<DEBUG> com.example.screentime.limitactivity"
+/**
+ * Activity that provides an Expandable ListView of all Categories with their respective Apps as children.
+ * When the User clicks on one of the Apps, a Dialog for picking a limit is opened.
+ */
+
+private const val TAG = "com.example.screentime.limitactivity"
 class LimitActivity : AppCompatActivity(), DialogLimitPicker.DialogLimitPickerListener
 {
 

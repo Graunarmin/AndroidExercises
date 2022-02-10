@@ -5,15 +5,23 @@ import android.util.Log
 import java.time.LocalDate
 import java.util.concurrent.TimeUnit
 
-private const val TAG = "<DEBUG> com.example.screentime.utils.DateTimeUtils"
+private const val TAG = "com.example.screentime.utils.DateTimeUtils"
 // https://www.baeldung.com/kotlin/dates
 
+/**
+ * Provides easy access to a human readable time format
+ */
 data class ReadableTime(var millisTime: Long)
 {
     val hours : Long = TimeUnit.MILLISECONDS.toHours(millisTime)
     val minutes: Long = TimeUnit.MILLISECONDS.toMinutes(millisTime) % TimeUnit.HOURS.toMinutes(1)
     val seconds : Long = TimeUnit.MILLISECONDS.toSeconds(millisTime) % TimeUnit.MINUTES.toSeconds(1)
 }
+
+/**
+ * Helper Functions to format dates and times - can be accessed from anywhere
+ */
+
 
 /**
  * Formats Date as "Today, Weekday #th
@@ -45,28 +53,37 @@ fun formatUsageTime(millisTime: Long): String
     return String.format("%dh %02dmin", time.hours, time.minutes)
 }
 
+/**
+ * Formats a number of minutes into the #h ##min Format
+ */
 fun floatMinutesToTime(minutes: Float) : String
 {
     var hours: Int = 0
     var min: Int = 0
-    if(minutes > 60)
+    when
     {
-        min = (minutes % 60).toInt()
-        hours = ((minutes - min) / 60).toInt()
-        return String.format("%dh\n%02dmin", hours, min)
-    }
-    else if (minutes == 60f)
-    {
-        hours = 1
-        return String.format("%dh", hours)
-    }
-    else
-    {
-        min = minutes.toInt()
-        return String.format("%dmin", min)
+        minutes > 60 ->
+        {
+            min = (minutes % 60).toInt()
+            hours = ((minutes - min) / 60).toInt()
+            return String.format("%dh %02dmin", hours, min)
+        }
+        minutes == 60f ->
+        {
+            hours = 1
+            return String.format("%dh", hours)
+        }
+        else ->
+        {
+            min = minutes.toInt()
+            return String.format("%dmin", min)
+        }
     }
 }
 
+/**
+ * Formats Milliseconds into the #h ##min format
+ */
 fun hourMinFormat(millisTime: Long) : String
 {
     val time = ReadableTime(millisTime)

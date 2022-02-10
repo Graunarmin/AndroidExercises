@@ -8,7 +8,13 @@ import com.example.screentime.ScreenTimeApp
 import com.example.screentime.categories.AppCategory
 import com.example.screentime.utils.formatUsageTime
 
-private const val TAG = "<-!-DEBUG-!-> com.example.screentime.items.categoryitem"
+/**
+ * An Instance of [CategoryItem] represents one of the categories from the usage statistics.
+ *
+ * For each new category that is found in the app list a new instance if [CategoryItem] is created
+ */
+
+private const val TAG = "com.example.screentime.items.categoryitem"
 class CategoryItem(categoryIndex: Int, var context: Context) : Item
 {
     override val categoryId: Int = categoryIndex

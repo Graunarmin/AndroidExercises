@@ -1,9 +1,12 @@
 package com.example.screentime.items
 
 import android.app.usage.UsageStats
-import android.util.Log
 
-private const val TAG = "<DEBUG> com.example.screentime.items.appcontainer"
+/**
+ * Inherits from the [ItemContainer], specifically handles the updating of the usage time for [AppItem]s
+ * and other [AppItem]-specific Actions
+ */
+private const val TAG = "com.example.screentime.items.appcontainer"
 class AppContainer : ItemContainer()
 {
     override fun updateUsageStats(usageStats: UsageStats) : Boolean
@@ -17,16 +20,23 @@ class AppContainer : ItemContainer()
         return false
     }
 
+    /**
+     * Retrieves a List of only those apps the were actually used
+     */
     fun getUsedApps() : ArrayList<AppItem>
     {
-        return ArrayList(itemList.filter { app -> app.wasUsed }.sortedBy { it.useTime }.reversed()) as ArrayList<AppItem>
+        return ArrayList(itemList.filter { app -> app.wasUsed }
+                             .sortedBy { it.useTime }
+                             .reversed()) as ArrayList<AppItem>
     }
 
-    fun getAppsWithLimit() : ArrayList<AppItem>
+    /**
+     * Retrieves a List of only those apps for which a limit was set
+     */
+    fun getAppsWithLimit(): ArrayList<AppItem>
     {
-        val list = ArrayList(itemList.filter { app -> app.limit > 0 }.sortedBy { it.itemName }.reversed()) as ArrayList<AppItem>
-
-        Log.d(TAG, "There are ${list.size} limits")
-        return list
+        return ArrayList(itemList.filter { app -> app.limit > 0 }
+                             .sortedBy { it.itemName }
+                             .reversed()) as ArrayList<AppItem>
     }
 }

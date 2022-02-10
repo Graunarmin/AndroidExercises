@@ -10,6 +10,12 @@ import com.example.screentime.items.CategoryContainer
 import com.example.screentime.items.ItemContainer
 import com.example.screentime.utils.hourMinFormat
 
+/**
+ * Singleton that provides access to the [ItemContainer]s of AppItems and CategoryItems
+ * for all activities
+ * Next Version: Replace Singleton with database
+ */
+
 const val  channelID = "channel_limit_notification"
 const val channelName = "limits_channel"
 class ScreenTimeApp : Application()
@@ -28,7 +34,7 @@ class ScreenTimeApp : Application()
     var appList: AppContainer = AppContainer()
     var categoryList: CategoryContainer = CategoryContainer()
 
-    //Holds all Categories mapped to the apps in that category
+    // Holds all Categories mapped to the apps in that category
     lateinit var categoriesMap: CategoriesMap
 
     var totalScreenTime: String = ""

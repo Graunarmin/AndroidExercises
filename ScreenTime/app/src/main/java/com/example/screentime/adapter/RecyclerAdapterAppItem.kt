@@ -8,11 +8,18 @@ import com.example.screentime.items.AppItem
 import com.example.screentime.items.Item
 import com.example.screentime.items.ItemContainer
 
+/**
+ * RecyclerAdapter for [AppItem]s
+ */
+
 private const val TAG = "<DEBUG> com.example.screentime.adapter.RecyclerAdapterAppItem"
 class RecyclerAdapterAppItem (itemClickListener: OnTimeItemClickListener) : RecyclerAdapterItem(itemClickListener)
 {
     override var itemList: ArrayList<Item> = ArrayList()
 
+    /**
+     * Updates the list of [AppItem]s that provides the data for the RecyclerView
+     */
     fun update()
     {
         itemList.clear()

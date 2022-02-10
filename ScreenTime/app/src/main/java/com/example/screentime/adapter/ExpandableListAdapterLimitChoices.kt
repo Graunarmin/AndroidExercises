@@ -9,7 +9,14 @@ import android.widget.TextView
 import com.example.screentime.R
 import com.example.screentime.categories.CategoriesMap
 
-private const val TAG = "<-!-DEBUG-!-> com.example.screentime.adapter.expandablelistadapter"
+/**
+ * Adapter for the Expandable List used in the LimitActivity
+ *
+ * @param [context] the context in which the expandable list exists
+ * @param [categories] the map that links all Categoires to their respective apps
+ */
+
+private const val TAG: String = "com.example.screentime.adapter.ExpandableListAdapterLimitChoices"
 class ExpandableListAdapterLimitChoices(var context: Context,
                                         var categories : CategoriesMap) : BaseExpandableListAdapter()
 {
@@ -21,7 +28,6 @@ class ExpandableListAdapterLimitChoices(var context: Context,
     override fun getChildrenCount(groupPosition: Int): Int
     {
         return categories.appCountAt(groupPosition)
-
     }
 
     override fun getGroup(groupPosition: Int): Any
@@ -56,7 +62,7 @@ class ExpandableListAdapterLimitChoices(var context: Context,
 
         if(convView == null){
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convView = inflater.inflate(R.layout.list_item_group, null)
+            convView = inflater.inflate(R.layout.expandable_list_item_group, null)
         }
 
         val tvGroupCategoryName = convView!!.findViewById<TextView>(R.id.tvGroupCategoryName)
@@ -72,7 +78,7 @@ class ExpandableListAdapterLimitChoices(var context: Context,
 
         if(convView == null){
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convView = inflater.inflate(R.layout.list_item_child, null)
+            convView = inflater.inflate(R.layout.expandable_list_item_child, null)
         }
 
         val tvChildAppName = convView!!.findViewById<TextView>(R.id.tvChildAppName)

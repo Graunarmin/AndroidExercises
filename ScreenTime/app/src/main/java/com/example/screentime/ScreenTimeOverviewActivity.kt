@@ -29,7 +29,10 @@ import com.github.mikephil.charting.charts.PieChart
 import java.time.LocalDate
 import java.util.*
 
-private const val TAG = "<DEBUG> com.example.screentime.ScreenTimeOverviewActivity"
+/**
+ * Central Focus Point of the App
+ */
+private const val TAG = "com.example.screentime.ScreenTimeOverviewActivity"
 const val EXTRA_APP_NAME_FOR_DETAILS = "EXTRA_APP_NAME_FOR_DETAILS"
 class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
 {
@@ -159,6 +162,9 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         }
     }
 
+    /**
+     * Checks whether one of the apps has exceeded their set limit
+     */
     private fun checkLimits()
     {
         for(app in ScreenTimeApp.appInstance.appList.getAppsWithLimit())
@@ -171,6 +177,9 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         }
     }
 
+    /**
+     * Toggles between App- and Category View, updates the UsageStats
+     */
     private fun showMostUsed()
     {
         if(showApps)
@@ -191,6 +200,9 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         updateOverviewToday()
     }
 
+    /**
+     * updates the Lists of Apps and Categories in [ScreenTimeApp] with the current use times and limits
+     */
     private fun updateUsageStats()
     {
         val usageStatsList: List<UsageStats> = getDailyUsageStats()
@@ -202,6 +214,10 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         ScreenTimeApp.appInstance.categoryList.updateUsageStats(usageStatsList[0])
     }
 
+
+    /**
+     * Updates the Pie Chart and the Total Use Time today
+     */
     private fun updateOverviewToday()
     {
         ScreenTimeApp.appInstance.updateTotalScreenTime()
@@ -210,6 +226,9 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         chartOverviewToday.notifyDataSetChanged()
     }
 
+    /**
+     * gets the usage stats of the current day from the UsageStatsManager
+     */
     private fun getDailyUsageStats(): List<UsageStats>
     {
         val calendar: Calendar = Calendar.getInstance()
@@ -223,6 +242,9 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         )
     }
 
+    /**
+     * Sends out a notification to the user that the limit for a specific app has been exceeded.
+     */
     private fun sendLimitNotification(item: Item)
     {
         val notification: Notification = NotificationCompat.Builder(this, channelID)
@@ -236,6 +258,9 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
         notificationManager.notify(1, notification)
     }
 
+    /**
+     * Starts the provided Activity with the provided message
+     */
     private fun startNewIntent(tag: String, message: String, newActivity: Class<*>?){
         Intent(this, newActivity).also {
             it.putExtra(tag, message)
