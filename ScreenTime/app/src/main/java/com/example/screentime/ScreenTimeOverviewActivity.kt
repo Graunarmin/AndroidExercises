@@ -24,6 +24,7 @@ import com.example.screentime.categories.AppCategory
 import com.example.screentime.items.AppItem
 import com.example.screentime.items.CategoryItem
 import com.example.screentime.utils.dayMonthFormat
+import com.example.screentime.utils.longMillisToFloatMinutes
 import com.github.mikephil.charting.charts.PieChart
 import java.time.LocalDate
 import java.util.*
@@ -141,7 +142,8 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
 
         for (useStat in usageStatsList)
         {
-            ScreenTimeApp.appInstance.appList.addIfNotContained(AppItem(useStat, this.applicationContext))
+            ScreenTimeApp.appInstance.appList.addIfNotContained(
+                    AppItem(useStat, this.applicationContext))
         }
     }
 
@@ -152,7 +154,8 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
     {
         for(category in AppCategory.values())
         {
-            ScreenTimeApp.appInstance.categoryList.addIfNotContained(CategoryItem(category.categoryId, this.applicationContext ))
+            ScreenTimeApp.appInstance.categoryList.addIfNotContained(
+                    CategoryItem(category.categoryId, this.applicationContext))
         }
     }
 
@@ -160,8 +163,9 @@ class ScreenTimeOverviewActivity : AppCompatActivity(), OnTimeItemClickListener
     {
         for(app in ScreenTimeApp.appInstance.appList.getAppsWithLimit())
         {
-            if(app.useTime >= app.limit)
+            if(longMillisToFloatMinutes(app.useTime) >= app.limit)
             {
+                Log.d(TAG, "Use Time ${app.useTime} is higher than Limit: ${app.limit}")
                 sendLimitNotification(app as Item)
             }
         }
